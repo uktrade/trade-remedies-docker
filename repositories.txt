@@ -1,3 +1,0 @@
-trade-remedies-api
-trade-remedies-caseworker
-trade-remedies-public
