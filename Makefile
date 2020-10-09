@@ -38,6 +38,7 @@ clone-repos:
 					git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \
+					cp local.env.example local.env
 			fi; \
 	done
 
