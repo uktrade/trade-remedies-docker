@@ -13,19 +13,16 @@ COLOUR_YELLOW=\033[33;01m
 .PHONY: help test
 help:
 	@echo -e "$(COLOUR_GREEN)|--- $(APPLICATION_NAME) [$(APPLICATION_VERSION)] ---|$(COLOUR_NONE)"
+	@echo -e "$(COLOUR_YELLOW)Service names are 'api', 'caseworker' and 'public'$(COLOUR_NONE)"
 	@echo -e "$(COLOUR_YELLOW)make clone-repos$(COLOUR_NONE) : Clone all service repositories"
-	@echo -e "$(COLOUR_YELLOW)make test$(COLOUR_NONE) : Run Django tests"
-	@echo -e "$(COLOUR_YELLOW)make black$(COLOUR_NONE) : Run black formatter"
-	@echo -e "$(COLOUR_YELLOW)make flake8$(COLOUR_NONE) : Run flake8 checks"
-	@echo -e "$(COLOUR_YELLOW)make api-bash$(COLOUR_NONE) : Start a bash session on the API container"
-	@echo -e "$(COLOUR_YELLOW)make celery-bash$(COLOUR_NONE) : Start a bash session on the Celery container"
+	@echo -e "$(COLOUR_YELLOW)make test$(COLOUR_NONE) : Run Django tests (accepts a 'service' and 'test' variable)"
+	@echo -e "$(COLOUR_YELLOW)make black$(COLOUR_NONE) : Run black formatter (accepts a 'service' variable)"
+	@echo -e "$(COLOUR_YELLOW)make flake8$(COLOUR_NONE) : Run flake8 checks (accepts a 'service' variable)"
+	@echo -e "$(COLOUR_YELLOW)make bash$(COLOUR_NONE) : Start a bash session on a container (requires a 'service' variable)"
 	@echo -e "$(COLOUR_YELLOW)make build$(COLOUR_NONE) : Run docker-compose build"
 	@echo -e "$(COLOUR_YELLOW)make up$(COLOUR_NONE) : Run docker-compose up"
-	@echo -e "$(COLOUR_YELLOW)make all-requirements$(COLOUR_NONE) : Generate all requirements files using pip compile"
-	@echo -e "$(COLOUR_YELLOW)make dev-requirements$(COLOUR_NONE) : Generate devlopment requirements files using pip compile"
-	@echo -e "$(COLOUR_YELLOW)make prod-requirements$(COLOUR_NONE) : Generate production requirements files using pip compile"
-	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations"
-	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate"
+	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' variable)"
+	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' variable)"
 
 clone-repos:
 	@echo -e "$(COLOUR_YELLOW)Fetching and installing repositories...$(COLOUR_NONE)"
@@ -72,64 +69,64 @@ api-front-end:
 	docker-compose run --rm public python manage.py collectstatic
 
 bash:
-ifndef $(service)
-	echo "$(COLOUR_YELLOW)Please supply a service name with the -service argument$(COLOUR_NONE)";
-else
+ifdef service
 	docker-compose run --rm $(service) bash
+else
+	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
 
 test:
-ifndef $(service)
+ifdef service
+	docker-compose run --rm $(service) test $(test)
+else
 	docker-compose run --rm api test $(test)
 	docker-compose run --rm public test $(test)
 	docker-compose run --rm caseworker test $(test)
-else
-	docker-compose run --rm $(service) test $(test)
 endif
 
 pytest:
-ifndef $(service)
+ifdef service
+	docker-compose run --rm $(service) pytest --ignore=staticfiles -n 4
+else
 	docker-compose run --rm api pytest --ignore=staticfiles -n 4
 	docker-compose run --rm public pytest --ignore=staticfiles -n 4
 	docker-compose run --rm caseworker pytest --ignore=staticfiles -n 4
-else
-	docker-compose run --rm $(service) pytest --ignore=staticfiles -n 4
 endif
 
 black:
-ifndef $(service)
+ifdef service
+	docker-compose run --rm $(service) black .
+else
 	docker-compose run --rm api black .
 	docker-compose run --rm public black .
 	docker-compose run --rm caseworker black .
-else
-	docker-compose run --rm $(service) black .
 endif
 
 flake8:
-ifndef $(service)
+ifdef service
+	docker-compose run --rm $(service) flake8
+else
 	docker-compose run --rm api flake8
 	docker-compose run --rm public flake8
 	docker-compose run --rm caseworker flake8
-else
-	docker-compose run --rm $(service) flake8
 endif
 
 makemigrations:
-ifndef $(service)
+ifdef service
+	docker-compose run --rm $(service) python manage.py makemigrations --noinput
+else
 	docker-compose run --rm api python manage.py makemigrations --noinput
 	docker-compose run --rm public python manage.py makemigrations --noinput
 	docker-compose run --rm caseworker python manage.py makemigrations --noinput
-else
-	docker-compose run --rm $(service) python manage.py makemigrations --noinput
 endif
 
 migrate:
-ifndef $(service)
+ifdef service
+	docker-compose run --rm $(service) python manage.py migrate --noinput
+else
 	docker-compose run --rm api python manage.py migrate --noinput
 	docker-compose run --rm public python manage.py migrate --noinput
 	docker-compose run --rm caseworker python manage.py migrate --noinput
-else
-	docker-compose run --rm $(service) python manage.py migrate --noinput
 endif
 
 frontend-code-style:
