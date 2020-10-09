@@ -38,7 +38,7 @@ clone-repos:
 					git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \
-					cp local.env.example local.env
+					cp local.env.example local.env; \
 			fi; \
 	done
 
@@ -73,65 +73,63 @@ api-front-end:
 
 bash:
 ifndef $(service)
-	docker-compose run --rm $(service) bash
+	echo "$(COLOUR_YELLOW)Please supply a service name with the -service argument$(COLOUR_NONE)";
 else
-	docker-compose run --rm api bash
-	docker-compose run --rm public bash
-	docker-compose run --rm caseworker bash
+	docker-compose run --rm $(service) bash
 endif
 
 test:
 ifndef $(service)
-	docker-compose run --rm $(service) test $(test)
-else
 	docker-compose run --rm api test $(test)
 	docker-compose run --rm public test $(test)
 	docker-compose run --rm caseworker test $(test)
+else
+	docker-compose run --rm $(service) test $(test)
 endif
 
 pytest:
 ifndef $(service)
-	docker-compose run --rm $(service) pytest --ignore=staticfiles -n 4
-else
 	docker-compose run --rm api pytest --ignore=staticfiles -n 4
 	docker-compose run --rm public pytest --ignore=staticfiles -n 4
 	docker-compose run --rm caseworker pytest --ignore=staticfiles -n 4
+else
+	docker-compose run --rm $(service) pytest --ignore=staticfiles -n 4
 endif
 
 black:
 ifndef $(service)
-	docker-compose run --rm $(service) black .
-else
 	docker-compose run --rm api black .
 	docker-compose run --rm public black .
 	docker-compose run --rm caseworker black .
+else
+	docker-compose run --rm $(service) black .
 endif
 
 flake8:
 ifndef $(service)
-	docker-compose run --rm $(service) flake8
-else
 	docker-compose run --rm api flake8
 	docker-compose run --rm public flake8
 	docker-compose run --rm caseworker flake8
+else
+	docker-compose run --rm $(service) flake8
 endif
 
 makemigrations:
 ifndef $(service)
-	docker-compose run --rm $(service) python manage.py makemigrations --noinput
-else
 	docker-compose run --rm api python manage.py makemigrations --noinput
 	docker-compose run --rm public python manage.py makemigrations --noinput
 	docker-compose run --rm caseworker python manage.py makemigrations --noinput
+else
+	docker-compose run --rm $(service) python manage.py makemigrations --noinput
 endif
 
 migrate:
 ifndef $(service)
-	docker-compose run --rm $(service) python manage.py migrate --noinput
-else
 	docker-compose run --rm api python manage.py migrate --noinput
 	docker-compose run --rm public python manage.py migrate --noinput
 	docker-compose run --rm caseworker python manage.py migrate --noinput
+else
+	docker-compose run --rm $(service) python manage.py migrate --noinput
 endif
 
 frontend-code-style:

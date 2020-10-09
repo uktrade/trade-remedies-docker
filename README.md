@@ -5,8 +5,25 @@ This repository provides a dockerised environment that can fetch, build and star
 
 **This approach MUST be used for all local development.** If you have issues getting set up, please speak to a colleague on the Live Services Team.
 
-### Makefile
+## Makefile
 
 The provided Makefile provides an interface to manage this environment. The following commands are available:
 
 Run `make help` to see a list of available commands
+
+## First run
+
+Run `make first-use`
+
+## Sites
+
+| Address | Site |
+| ------------- | ------------- |
+| `http://localhost:8000` | API |
+| `http://localhost:8001` | Caseworker site |
+| `http://localhost:8002` | Public site |
+
+## Known issues
+
+If, when first accessing the caseworker site, you receive a forbidden message, you need clear your session and cookies.
+
