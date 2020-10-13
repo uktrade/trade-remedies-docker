@@ -1,6 +1,5 @@
 APPLICATION_NAME="Trade Remedies Dev Env"
 
-GITHUB_USER_NAME='rossmiller'
 SERVICE_REPO_LIST=trade-remedies-api trade-remedies-caseworker trade-remedies-public
 BRANCH='develop'
 BASE_PATH='.'
@@ -15,14 +14,21 @@ help:
 	@echo -e "$(COLOUR_GREEN)|--- $(APPLICATION_NAME) [$(APPLICATION_VERSION)] ---|$(COLOUR_NONE)"
 	@echo -e "$(COLOUR_YELLOW)Service names are 'api', 'caseworker' and 'public'$(COLOUR_NONE)"
 	@echo -e "$(COLOUR_YELLOW)make clone-repos$(COLOUR_NONE) : Clone all service repositories"
-	@echo -e "$(COLOUR_YELLOW)make test$(COLOUR_NONE) : Run Django tests (accepts a 'service' and 'test' variable)"
-	@echo -e "$(COLOUR_YELLOW)make black$(COLOUR_NONE) : Run black formatter (accepts a 'service' variable)"
-	@echo -e "$(COLOUR_YELLOW)make flake8$(COLOUR_NONE) : Run flake8 checks (accepts a 'service' variable)"
-	@echo -e "$(COLOUR_YELLOW)make bash$(COLOUR_NONE) : Start a bash session on a container (requires a 'service' variable)"
 	@echo -e "$(COLOUR_YELLOW)make build$(COLOUR_NONE) : Run docker-compose build"
 	@echo -e "$(COLOUR_YELLOW)make up$(COLOUR_NONE) : Run docker-compose up"
-	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' variable)"
-	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' variable)"
+	@echo -e "$(COLOUR_YELLOW)make down$(COLOUR_NONE) : Run docker-compose down"
+	@echo -e "$(COLOUR_YELLOW)make start$(COLOUR_NONE) : Run docker-compose start"
+	@echo -e "$(COLOUR_YELLOW)make stop$(COLOUR_NONE) : Run docker-compose stop"
+	@echo -e "$(COLOUR_YELLOW)make first-use$(COLOUR_NONE) : Create development enviornments set up with test data and admin user"
+	@echo -e "$(COLOUR_YELLOW)make api-front-end$(COLOUR_NONE) : Run API front end"
+	@echo -e "$(COLOUR_YELLOW)make caseworker-front-end-style$(COLOUR_NONE) : Run code quality checks on caseworker front end"
+	@echo -e "$(COLOUR_YELLOW)make logs$(COLOUR_NONE) : View container logs (accepts a 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make bash$(COLOUR_NONE) : Start a bash session on a container (requires a 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make test$(COLOUR_NONE) : Run Django tests (accepts a 'service' and 'test' variable)"
+	@echo -e "$(COLOUR_YELLOW)make black$(COLOUR_NONE) : Run black formatter (accepts a 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make flake8$(COLOUR_NONE) : Run flake8 checks (accepts a 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
 
 clone-repos:
 	@echo -e "$(COLOUR_YELLOW)Fetching and installing repositories...$(COLOUR_NONE)"
@@ -93,11 +99,11 @@ endif
 
 test:
 ifdef service
-	docker-compose run --rm $(service) test $(test)
+	docker-compose run --rm $(service) python manage.py test $(test)
 else
-	docker-compose run --rm api test $(test)
-	docker-compose run --rm public test $(test)
-	docker-compose run --rm caseworker test $(test)
+	docker-compose run --rm api python manage.py test $(test)
+	docker-compose run --rm public python manage.py test $(test)
+	docker-compose run --rm caseworker python manage.py test $(test)
 endif
 
 pytest:
