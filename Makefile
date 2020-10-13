@@ -99,9 +99,9 @@ endif
 
 test:
 ifdef service
-	docker-compose run --rm $(service) python manage.py test $(test)
+	docker-compose run --rm $(service) python manage.py test --verbosity=2 $(test)
 else
-	docker-compose run --rm api python manage.py test $(test)
+	docker-compose run --rm api python manage.py test --verbosity=2 $(test)
 	docker-compose run --rm public python manage.py test $(test)
 	docker-compose run --rm caseworker python manage.py test $(test)
 endif
