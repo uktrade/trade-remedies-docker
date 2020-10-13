@@ -48,6 +48,12 @@ up:
 down:
 	docker-compose down
 
+start:
+	docker-compose start
+
+stop:
+	docker-compose stop
+
 first-use:
 	docker-compose down
 	docker-compose build
@@ -62,11 +68,21 @@ first-use:
 	docker-compose run --rm api python manage.py collectstatic --noinput
 	docker-compose run --rm public python manage.py collectstatic --noinput
 	docker-compose run --rm caseworker python manage.py collectstatic --noinput
-	docker-compose up
+	docker-compose --rm up
 
 api-front-end:
 	npm run postinstall --prefix trade-remedies-public
 	docker-compose run --rm public python manage.py collectstatic
+
+caseworker-front-end-style:
+	npm i && npx prettier --check "../trade-remedies-caseworker/trade_remedies_caseworker/templates/{static,sass}/**/*.{scss,js}"
+
+logs:
+ifdef service
+	docker-compose logs -f -t $(service)
+else
+	docker-compose logs -f -t
+endif
 
 bash:
 ifdef service
@@ -111,7 +127,7 @@ else
 	docker-compose run --rm caseworker flake8
 endif
 
-makemigrations:
+migrations:
 ifdef service
 	docker-compose run --rm $(service) python manage.py makemigrations --noinput
 else
@@ -128,6 +144,3 @@ else
 	docker-compose run --rm public python manage.py migrate --noinput
 	docker-compose run --rm caseworker python manage.py migrate --noinput
 endif
-
-frontend-code-style:
-	docker run -it --rm -v "$(CURDIR):/app" node:stretch-slim sh -c 'cd /app && npm i && npx prettier --check "trade_remedies_caseworker/templates/{static,sass}/**/*.{scss,js}"'
