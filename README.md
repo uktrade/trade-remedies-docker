@@ -15,6 +15,8 @@ Run `make help` to see a list of available commands
 
 Run `make clone-repos`
 
+Populate the local.env files with any missing values.
+
 Run `make first-use`
 
 ## Sites
