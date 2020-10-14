@@ -27,5 +27,5 @@ Run `make first-use`
 
 ## Known issues
 
-If, when first accessing the caseworker site, you receive a forbidden message, you need clear your session and cookies.
+If, when first accessing the caseworker site, you receive a forbidden message, you need to clear your session and cookies.
 
