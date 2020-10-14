@@ -74,7 +74,7 @@ first-use:
 	docker-compose run --rm api python manage.py collectstatic --noinput
 	docker-compose run --rm public python manage.py collectstatic --noinput
 	docker-compose run --rm caseworker python manage.py collectstatic --noinput
-	docker-compose --rm up
+	docker-compose up
 
 api-front-end:
 	npm run postinstall --prefix trade-remedies-public
