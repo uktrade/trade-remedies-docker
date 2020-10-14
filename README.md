@@ -13,6 +13,7 @@ Run `make help` to see a list of available commands
 
 ## First run
 
+Run `make clone-repos`
 Run `make first-use`
 
 ## Sites
