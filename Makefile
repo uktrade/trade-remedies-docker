@@ -1,7 +1,7 @@
 APPLICATION_NAME="Trade Remedies Dev Env"
 
 SERVICE_REPO_LIST=trade-remedies-api trade-remedies-caseworker trade-remedies-public
-BRANCH='develop'
+BRANCH='feature/reorganise-repo'
 BASE_PATH='.'
 
 # Colour coding for output
@@ -38,7 +38,7 @@ clone-repos:
 					cd $(BASE_PATH)/../$$repo_name && pwd && git fetch && git checkout $(BRANCH) && git branch && git pull ; \
 			else \
 					echo -e "$(COLOUR_YELLOW)cloning: $$repo_name$(COLOUR_NONE)" ; \
-					git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+					git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \
 					cp local.env.example local.env; \
