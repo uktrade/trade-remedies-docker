@@ -1,4 +1,7 @@
 version: "3"
+volumes:
+  postgres_data:
+    driver: local
 services:
   redis:
     extends:
@@ -46,6 +49,3 @@ services:
 networks:
   proxynet:
     name: trade_remedies_network
-volumes:
-  postgres_data:
-    driver: local

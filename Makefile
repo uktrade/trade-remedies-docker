@@ -1,3 +1,4 @@
+SHELL := /bin/bash
 APPLICATION_NAME="Trade Remedies Dev Env"
 
 SERVICE_REPO_LIST=trade-remedies-api trade-remedies-caseworker trade-remedies-public
@@ -20,6 +21,7 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make start$(COLOUR_NONE) : Run docker-compose start"
 	@echo -e "$(COLOUR_YELLOW)make stop$(COLOUR_NONE) : Run docker-compose stop"
 	@echo -e "$(COLOUR_YELLOW)make first-use$(COLOUR_NONE) : Create development enviornments set up with test data and admin user"
+	@echo -e "$(COLOUR_YELLOW)make reseed-api-data$(COLOUR_NONE) : Reseed API development data"
 	@echo -e "$(COLOUR_YELLOW)make api-front-end$(COLOUR_NONE) : Run API front end"
 	@echo -e "$(COLOUR_YELLOW)make caseworker-front-end-style$(COLOUR_NONE) : Run code quality checks on caseworker front end"
 	@echo -e "$(COLOUR_YELLOW)make logs$(COLOUR_NONE) : View container logs (accepts a 'service' argument)"
@@ -38,7 +40,7 @@ clone-repos:
 					cd $(BASE_PATH)/../$$repo_name && pwd && git fetch && git checkout $(BRANCH) && git branch && git pull ; \
 			else \
 					echo -e "$(COLOUR_YELLOW)cloning: $$repo_name$(COLOUR_NONE)" ; \
-					git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+					git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \
 					cp local.env.example local.env; \
@@ -63,18 +65,22 @@ stop:
 first-use:
 	docker-compose down
 	docker-compose build
-	docker-compose run --rm api python manage.py migrate --noinput
-	docker-compose run --rm public python manage.py migrate --noinput
-	docker-compose run --rm caseworker python manage.py migrate --noinput
-	docker-compose run --rm api python manage.py resetsecurity
-	docker-compose run --rm api sh fixtures.sh
-	docker-compose run --rm api python manage.py load_sysparams
-	docker-compose run --rm api python manage.py adminuser
-	docker-compose run --rm api python manage.py s3credentials
-	docker-compose run --rm api python manage.py collectstatic --noinput
-	docker-compose run --rm public python manage.py collectstatic --noinput
-	docker-compose run --rm caseworker python manage.py collectstatic --noinput
-	docker-compose up
+	docker-compose up -d 
+	docker-compose exec api python manage.py migrate --noinput
+	docker-compose exec public python manage.py migrate --noinput
+	docker-compose exec caseworker python manage.py migrate --noinput
+	docker-compose exec api python manage.py resetsecurity
+	docker-compose exec api sh fixtures.sh
+	docker-compose exec api python manage.py load_sysparams
+	docker-compose exec api python manage.py adminuser
+	docker-compose exec api python manage.py s3credentials
+	docker-compose exec api python manage.py collectstatic --noinput
+	docker-compose exec public python manage.py collectstatic --noinput
+	docker-compose exec caseworker python manage.py collectstatic --noinput
+	docker-compose stop	
+
+reseed-api-data:
+	docker-compose exec api bash -c "python manage.py migrate --noinput && python manage.py resetsecurity && sh fixtures.sh && python manage.py load_sysparams && python manage.py adminuser && python manage.py s3credentials && python manage.py collectstatic --noinput"
 
 api-front-end:
 	npm run postinstall --prefix trade-remedies-public
