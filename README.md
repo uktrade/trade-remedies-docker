@@ -19,6 +19,13 @@ Populate the project's local.env files with any missing values.
 
 Run `make first-use`
 
+### Required manual configuration
+
+You *must* update values to your `local.env` files to operate the websites locally. See the inline comments in the individual repositories.
+
+Run `make collect-notify-templates`
+
+
 ## Sites
 
 | Address | Site |
