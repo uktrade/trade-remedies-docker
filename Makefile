@@ -2,7 +2,7 @@ SHELL := /bin/bash
 APPLICATION_NAME="Trade Remedies Dev Env"
 
 SERVICE_REPO_LIST=trade-remedies-api trade-remedies-caseworker trade-remedies-public
-BRANCH='feature/reorganise-repo'
+BRANCH='develop'
 BASE_PATH='.'
 
 # Colour coding for output
