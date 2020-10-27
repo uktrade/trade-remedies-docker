@@ -50,11 +50,17 @@ clone-repos:
 build:
 	docker-compose build
 
+build-test:
+	docker-compose -f docker-compose.bdd.yml build
+
 up:
 	docker-compose up
 
 down:
 	docker-compose down
+
+down-test:
+	docker-compose -f docker-compose.bdd.yml down
 
 start:
 	docker-compose start
@@ -155,4 +161,16 @@ else
 	docker-compose run --rm api python manage.py migrate --noinput
 	docker-compose run --rm public python manage.py migrate --noinput
 	docker-compose run --rm caseworker python manage.py migrate --noinput
+endif
+
+end-to-end:
+ifdef service
+	docker-compose -f docker-compose.bdd.yml down 
+	docker-compose -f docker-compose.bdd.yml up -d test-api
+	docker-compose -f docker-compose.bdd.yml exec test-api python manage.py migrate
+# 	docker-compose exec test-api python manage.py create_stub_data
+# 	docker-compose run --rm $(service) behave # or whatever the django behave cmd is
+# 	docker-compose down test-api
+else
+	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
