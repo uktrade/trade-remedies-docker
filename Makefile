@@ -9,12 +9,13 @@ BASE_PATH='.'
 COLOUR_NONE=\033[0m
 COLOUR_GREEN=\033[32;01m
 COLOUR_YELLOW=\033[33;01m
+COLOUR_RED='\033[0;31m'
 
 .PHONY: help test
 help:
 	@echo -e "$(COLOUR_GREEN)|--- $(APPLICATION_NAME) [$(APPLICATION_VERSION)] ---|$(COLOUR_NONE)"
 	@echo -e "$(COLOUR_YELLOW)Service names are 'api', 'caseworker' and 'public'$(COLOUR_NONE)"
-	@echo -e "$(COLOUR_YELLOW)make clone-repos$(COLOUR_NONE) : Clone all service repositories"
+	@echo -e "$(COLOUR_YELLOW)make clone-repos$(COLOUR_NONE) : Clone all service repositories (accepts a 'clonetype' argument which should be set to 'https')"
 	@echo -e "$(COLOUR_YELLOW)make build$(COLOUR_NONE) : Run docker-compose build"
 	@echo -e "$(COLOUR_YELLOW)make up$(COLOUR_NONE) : Run docker-compose up"
 	@echo -e "$(COLOUR_YELLOW)make down$(COLOUR_NONE) : Run docker-compose down"
@@ -33,6 +34,12 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
 
 clone-repos:
+ifdef clonetype
+	if [ "$(clonetype)" != "https" ]; then \
+		echo -e "$(COLOUR_RED)Please supply 'https' as clonetype value or omit argument to use SSH$(COLOUR_NONE)" ; \
+		exit 1; \
+	fi;
+endif
 	@echo -e "$(COLOUR_YELLOW)Fetching and installing repositories...$(COLOUR_NONE)"
 	@for repo_name in $(SERVICE_REPO_LIST); do \
 			if [ -a $(BASE_PATH)/../$$repo_name ]; then \
@@ -40,7 +47,13 @@ clone-repos:
 					cd $(BASE_PATH)/../$$repo_name && pwd && git fetch && git checkout $(BRANCH) && git branch && git pull ; \
 			else \
 					echo -e "$(COLOUR_YELLOW)cloning: $$repo_name$(COLOUR_NONE)" ; \
-					git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+					if [ "$(clonetype)" ]; then \
+						echo -e "$(COLOUR_YELLOW)cloning using https$(COLOUR_NONE)" ; \
+						git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+					else \
+						echo -e "$(COLOUR_YELLOW)cloning using SSH$(COLOUR_NONE)" ; \
+						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+					fi; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \
 					cp local.env.example local.env; \
