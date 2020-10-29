@@ -15,6 +15,10 @@ Run `make help` to see a list of available commands
 
 Run `make clone-repos`
 
+This uses a SSH git clone by default. Run the following command if you want to use https:
+
+Run `make clone-repos clonetype=https`
+
 Populate the project's local.env files with any missing values.
 
 Run `make first-use`
