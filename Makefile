@@ -31,6 +31,7 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make flake8$(COLOUR_NONE) : Run flake8 checks (accepts a 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make end-to-end$(COLOUR_NONE) : Run containers for bdd tests (requires the 'service' argument)"
 
 clone-repos:
 	@echo -e "$(COLOUR_YELLOW)Fetching and installing repositories...$(COLOUR_NONE)"
@@ -167,10 +168,12 @@ end-to-end:
 ifdef service
 	docker-compose -f docker-compose.bdd.yml down 
 	docker-compose -f docker-compose.bdd.yml up -d test-api
-	docker-compose -f docker-compose.bdd.yml exec test-api python manage.py migrate
+#	docker-compose -f docker-compose.bdd.yml exec test-api python manage.py migrate
+	docker-compose -f docker-compose.bdd.yml exec test-api bash -c "python manage.py migrate --noinput && python manage.py resetsecurity && sh fixtures.sh && python manage.py load_sysparams && python manage.py adminuser && python manage.py s3credentials && python manage.py collectstatic --noinput"
+
 # 	docker-compose exec test-api python manage.py create_stub_data
 # 	docker-compose run --rm $(service) behave # or whatever the django behave cmd is
 # 	docker-compose down test-api
 else
-	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
+	@echo -e "$(COLOUR_YELLOW)Please supply a supported service name ('public' or 'caseworker') with the service argument$(COLOUR_NONE)";
 endif
