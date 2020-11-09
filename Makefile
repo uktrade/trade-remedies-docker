@@ -93,7 +93,7 @@ first-use:
 	docker-compose stop	
 
 reseed-api-data:
-	docker-compose exec api bash -c "python manage.py migrate --noinput && python manage.py resetsecurity && sh fixtures.sh && python manage.py load_sysparams && python manage.py adminuser && python manage.py s3credentials && python manage.py collectstatic --noinput"
+	docker-compose run api bash -c "python manage.py migrate --noinput && python manage.py resetsecurity && sh fixtures.sh && python manage.py load_sysparams && python manage.py adminuser && python manage.py s3credentials && python manage.py collectstatic --noinput"
 
 api-front-end:
 	npm run postinstall --prefix trade-remedies-public
