@@ -143,6 +143,13 @@ else
 	docker-compose run --rm caseworker black .
 endif
 
+shell:
+ifdef service
+	docker-compose run --rm $(service) django-admin shell
+else
+	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
+endif
+
 flake8:
 ifdef service
 	docker-compose run --rm $(service) flake8
