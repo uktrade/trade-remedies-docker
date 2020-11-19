@@ -25,11 +25,13 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make reseed-api-data$(COLOUR_NONE) : Reseed API development data"
 	@echo -e "$(COLOUR_YELLOW)make api-front-end$(COLOUR_NONE) : Run API front end"
 	@echo -e "$(COLOUR_YELLOW)make caseworker-front-end-style$(COLOUR_NONE) : Run code quality checks on caseworker front end"
+	@echo -e "$(COLOUR_YELLOW)make all-requirements$(COLOUR_NONE) : Generate requirement files for all projects"
 	@echo -e "$(COLOUR_YELLOW)make logs$(COLOUR_NONE) : View container logs (accepts a 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make bash$(COLOUR_NONE) : Start a bash session on a container (requires a 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make test$(COLOUR_NONE) : Run Django tests (accepts a 'service' and 'test' variable)"
 	@echo -e "$(COLOUR_YELLOW)make black$(COLOUR_NONE) : Run black formatter (accepts a 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make flake8$(COLOUR_NONE) : Run flake8 checks (accepts a 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make shell$(COLOUR_NONE) : Run a Django shell (accepts a 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
 
@@ -148,13 +150,6 @@ else
 	docker-compose run --rm caseworker black .
 endif
 
-shell:
-ifdef service
-	docker-compose run --rm $(service) django-admin shell
-else
-	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
-endif
-
 flake8:
 ifdef service
 	docker-compose run --rm $(service) flake8
@@ -162,6 +157,13 @@ else
 	docker-compose run --rm api flake8
 	docker-compose run --rm public flake8
 	docker-compose run --rm caseworker flake8
+endif
+
+shell:
+ifdef service
+	docker-compose run --rm $(service) django-admin shell
+else
+	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
 
 migrations:
