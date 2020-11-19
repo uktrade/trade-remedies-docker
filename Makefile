@@ -102,6 +102,11 @@ api-front-end:
 caseworker-front-end-style:
 	npm i && npx prettier --check "../trade-remedies-caseworker/trade_remedies_caseworker/templates/{static,sass}/**/*.{scss,js}"
 
+all-requirements:
+	cd ../trade-remedies-api && make all-requirements
+	cd ../trade-remedies-caseworker && make all-requirements
+	cd ../trade-remedies-public && make all-requirements
+
 logs:
 ifdef service
 	docker-compose logs -f -t $(service)
