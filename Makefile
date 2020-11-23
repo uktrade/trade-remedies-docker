@@ -170,9 +170,8 @@ ifdef service
 	docker-compose -f docker-compose.bdd.yml up -d test-api
 #	docker-compose -f docker-compose.bdd.yml exec test-api python manage.py migrate
 	docker-compose -f docker-compose.bdd.yml exec test-api bash -c "python manage.py migrate --noinput && python manage.py resetsecurity && sh fixtures.sh && python manage.py load_sysparams && python manage.py adminuser && python manage.py s3credentials && python manage.py collectstatic --noinput"
-
 # 	docker-compose exec test-api python manage.py create_stub_data
-# 	docker-compose run --rm $(service) behave # or whatever the django behave cmd is
+	docker-compose run --rm -e API_BASE_URL=http://api:8007 $(service) # behave or whatever the django behave cmd is
 # 	docker-compose down test-api
 else
 	@echo -e "$(COLOUR_YELLOW)Please supply a supported service name ('public' or 'caseworker') with the service argument$(COLOUR_NONE)";
