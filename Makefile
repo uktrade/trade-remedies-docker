@@ -35,6 +35,7 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make bdd$(COLOUR_NONE) : Run Django BDD tests (accepts 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make collect-notify-templates$(COLOUR_NONE) : Populates SYS_PARAMS with template names from govuk notify"
 
 clone-repos:
 ifdef clonetype
@@ -92,10 +93,17 @@ first-use:
 	docker-compose exec api python manage.py s3credentials
 	docker-compose exec api python manage.py collectstatic --noinput
 	docker-compose exec public python manage.py collectstatic --noinput
+	
 	docker-compose exec caseworker python manage.py collectstatic --noinput
 	docker-compose stop	
 
+
+collect-notify-templates:
+	docker-compose run --rm api python manage.py notify_env
+
+
 reseed-api-data:
+	docker-compose exec api python manage.py notify_env
 	docker-compose exec api bash -c "python manage.py migrate --noinput && python manage.py resetsecurity && sh fixtures.sh && python manage.py load_sysparams && python manage.py adminuser && python manage.py s3credentials && python manage.py collectstatic --noinput"
 
 api-front-end:
