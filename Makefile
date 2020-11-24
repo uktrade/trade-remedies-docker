@@ -34,6 +34,7 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make shell$(COLOUR_NONE) : Run a Django shell (accepts a 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make bdd$(COLOUR_NONE) : Run Django BDD tests (accepts 'service' argument)"
 
 clone-repos:
 ifdef clonetype
@@ -120,7 +121,22 @@ bash:
 ifdef service
 	docker-compose run --rm $(service) bash
 else
-	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
+	@echo -e "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
+endif
+
+bdd:
+ifdef service
+	DJANGO_SETTINGS_MODULE=trade_remedies_public.settings.local \
+	docker-compose exec $(service) bash -c "\
+		python manage.py behave ${BEHAVE_OPTS} \
+		--settings=trade_remedies_public.settings.local \
+		--no-capture \
+		--no-input \
+		--junit-directory test-reports --junit \
+		--tags ~@skip \
+	"
+else
+	@echo -e "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
 
 test:
