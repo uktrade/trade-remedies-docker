@@ -46,6 +46,29 @@ services:
       - redis
     networks:
       - proxynet
+  selenium-hub:
+    image: selenium/hub:3.141.59-vanadium
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+    depends_on:
+      - public
+      - caseworker
+    networks:
+      - proxynet
+  chrome:
+    image: selenium/node-chrome-debug:3.141.59-vanadium
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+    ports:
+      - "5900:5900"
+    depends_on:
+      - selenium-hub
+    networks:
+      - proxynet
 networks:
   proxynet:
     name: trade_remedies_network
