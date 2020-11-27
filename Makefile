@@ -36,6 +36,7 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make bdd$(COLOUR_NONE) : Run Django BDD tests (accepts 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make collect-notify-templates$(COLOUR_NONE) : Populates SYS_PARAMS with template names from govuk notify"
+	@echo -e "$(COLOUR_YELLOW)make rebrand_trade_authority OLDNAME=<oldname> NEWNAME=<newname> $(COLOUR_NONE) : Rebrand the organisation entry for the trade authority in the database from <oldname> to <newname>"
 
 clone-repos:
 ifdef clonetype
@@ -207,3 +208,8 @@ else
 	docker-compose run --rm public python manage.py migrate --noinput
 	docker-compose run --rm caseworker python manage.py migrate --noinput
 endif
+
+rebrand_trade_authority:
+	docker-compose up -d postgres
+	docker exec trade-remedies-docker_postgres_1 psql -U postgres -h 127.0.0.1 -d trade_remedies -c "UPDATE ORGANISATIONS_ORGANISATION set NAME='$(NEWNAME)' WHERE name='$(OLDNAME)';"
+	docker-compose down
