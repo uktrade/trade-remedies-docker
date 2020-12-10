@@ -165,6 +165,13 @@ else
 	docker-compose run --rm caseworker pytest --ignore=staticfiles -n 4
 endif
 
+test-test:
+	# Reset DB
+	docker-compose exec postgres dropdb dbname=trade_remedies_api_test -U postgres --if-exists
+	docker-compose exec postgres psql -U postgres -d postgres -c "CREATE DATABASE trade_remedies_api_test;"
+	docker-compose run --rm api_test python manage.py migrate
+	docker-compose exec public sh -c "python manage.py behave --settings=trade_remedies_public.settings.bdd --no-capture"
+
 black:
 ifdef service
 	docker-compose run --rm $(service) black .
