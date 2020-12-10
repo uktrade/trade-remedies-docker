@@ -36,6 +36,7 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make bdd$(COLOUR_NONE) : Run Django BDD tests (accepts 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make collect-notify-templates$(COLOUR_NONE) : Populates SYS_PARAMS with template names from govuk notify"
+	@echo -e "$(COLOUR_YELLOW)make end-to-end$(COLOUR_NONE) : Run containers for bdd tests (requires the 'service' argument)"
 
 clone-repos:
 ifdef clonetype
@@ -67,11 +68,17 @@ endif
 build:
 	docker-compose build
 
+build-test:
+	docker-compose -f docker-compose.bdd.yml build
+
 up:
 	docker-compose up
 
 down:
 	docker-compose down
+
+down-test:
+	docker-compose -f docker-compose.bdd.yml down
 
 start:
 	docker-compose start
@@ -165,11 +172,11 @@ else
 	docker-compose run --rm caseworker pytest --ignore=staticfiles -n 4
 endif
 
-test-test:
-	# Reset DB
-	docker-compose exec postgres dropdb dbname=trade_remedies_api_test -U postgres --if-exists
-	docker-compose exec postgres psql -U postgres -d postgres -c "CREATE DATABASE trade_remedies_api_test;"
-	docker-compose run --rm api_test python manage.py migrate
+bdd-test:
+	docker-compose exec postgres psql -U postgres -d postgres -c "UPDATE pg_database SET datallowconn = 'false' WHERE datname = 'trade_remedies_api_test';ALTER DATABASE trade_remedies_api_test CONNECTION LIMIT 1;SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'trade_remedies_api_test'"
+	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
+	docker-compose exec postgres psql -U postgres -d postgres -c "CREATE DATABASE trade_remedies_api_test"
+	docker-compose run --rm apitest python manage.py migrate
 	docker-compose exec public sh -c "python manage.py behave --settings=trade_remedies_public.settings.bdd --no-capture"
 
 black:
@@ -213,4 +220,17 @@ else
 	docker-compose run --rm api python manage.py migrate --noinput
 	docker-compose run --rm public python manage.py migrate --noinput
 	docker-compose run --rm caseworker python manage.py migrate --noinput
+endif
+
+end-to-end:
+ifdef service
+	docker-compose -f docker-compose.bdd.yml down 
+	docker-compose -f docker-compose.bdd.yml up -d test-api
+#	docker-compose -f docker-compose.bdd.yml exec test-api python manage.py migrate
+	docker-compose -f docker-compose.bdd.yml exec test-api bash -c "python manage.py migrate --noinput && python manage.py resetsecurity && sh fixtures.sh && python manage.py load_sysparams && python manage.py adminuser && python manage.py s3credentials && python manage.py collectstatic --noinput"
+# 	docker-compose exec test-api python manage.py create_stub_data
+	docker-compose run --rm -e API_BASE_URL=http://api:8007 $(service) # behave or whatever the django behave cmd is
+# 	docker-compose down test-api
+else
+	@echo -e "$(COLOUR_YELLOW)Please supply a supported service name ('public' or 'caseworker') with the service argument$(COLOUR_NONE)";
 endif

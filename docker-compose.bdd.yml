@@ -1,0 +1,43 @@
+version: "3"
+networks:
+  test-proxynet:
+    name: trade_remedies_network_test
+services:
+  test-redis:
+    image: redis:alpine
+    networks:
+      - test-proxynet
+    ports:
+      - "8003:5432"
+  test-postgres:
+    image: postgres:10.7      
+    environment:
+      POSTGRES_DB: trade_remedies_test
+    networks:
+      - test-proxynet
+    ports:
+      - "8004:5432"
+  test-elasticsearch:
+    image: elasticsearch:6.8.7
+    restart: unless-stopped
+    networks:
+      - test-proxynet
+    ports:
+      - "8005:9200"
+      - "8006:9300"
+  test-api:
+    extends:
+      file: ../trade-remedies-api/docker-compose.yml
+      service: api
+    ports:
+      - "8007:8000"
+    environment:
+      - DATABASE_URL=psql://postgres:postgres@test-postgres:5432/trade_remedies_test
+      - DJANGO_SETTINGS_MODULE=trade_remedies_api.settings.test
+      - REDIS_BASE_URL=redis://test-redis:6379
+      - ELASTIC_HOST=test-elasticsearch
+    depends_on:
+      - test-postgres
+      - test-redis
+    networks:
+      - test-proxynet
