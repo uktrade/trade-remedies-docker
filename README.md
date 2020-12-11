@@ -31,7 +31,7 @@ Behavioural testing is provided by Behave Django - https://github.com/behave/beh
 
 This make command creates a test database (that is used by the 'apitest' container), runs migrations and then initialises BDD tests.
 
-When running from within a BDD test, if the public or caseworker sites access the API, they access an endpoint on the 'apitest' container.
+When running from within a BDD test, if the public or caseworker sites access the API, they access an endpoint on the 'apitest' container (rather than the 'api' container, as is usually the case).
 
 This means that BDD tests are completely siloed from local development infrastructure and can be run in parallel.
 
