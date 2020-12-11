@@ -27,15 +27,17 @@ Run `make first-use`
 
 Behavioural testing is provided by Behave Django - https://github.com/behave/behave-django and can be triggered by:
 
-Run `make bdd`
+`make bdd`
 
-This make command creates a test database that is used by the 'apitest' container, runs migrations and then initialises BDD tests.
+This make command creates a test database (that is used by the `apitest` container), runs migrations and then initialises BDD tests.
 
-When running from within a BDD test, if the public or caseworker sites access the API, they access an endpoint on the 'apitest' container.
+When running from within a BDD test, if the public or caseworker sites access the API, they access an endpoint on the `apitest` container.
 
 This means that BDD tests are completely siloed from local development infrastructure and can be run in parallel.
 
-The 'apitest' container is configured to allow access to test object creation endpoints that are excluded from other configurations.
+The `apitest` container is configured to allow access to test object creation endpoints that are excluded from other configurations.
+
+For this reason, the `api_test` app in the API project should never be added to non test Django configurations.
 
 ### Required manual configuration
 
