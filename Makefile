@@ -67,17 +67,11 @@ endif
 build:
 	docker-compose build
 
-build-test:
-	docker-compose -f docker-compose.bdd.yml build
-
 up:
 	docker-compose up
 
 down:
 	docker-compose down
-
-down-test:
-	docker-compose -f docker-compose.bdd.yml down
 
 start:
 	docker-compose start
