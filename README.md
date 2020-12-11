@@ -23,6 +23,12 @@ Populate the project's local.env files with any missing values.
 
 Run `make first-use`
 
+### Required manual configuration
+
+You *must* update values to your `local.env` files to operate the websites locally. See the inline comments in the individual repositories.
+
+Run `make collect-notify-templates`
+
 ## BDD testing
 
 Behavioural testing is provided by Behave Django - https://github.com/behave/behave-django and can be triggered by:
@@ -40,12 +46,6 @@ The 'apitest' container is configured to allow access to test object creation en
 For this reason, the 'api_test' app in the API project should never be added to non test Django configurations.
 
 Nb. For BDD tests to execute, the containers need to be running. You can do this by running `make up`.
-
-### Required manual configuration
-
-You *must* update values to your `local.env` files to operate the websites locally. See the inline comments in the individual repositories.
-
-Run `make collect-notify-templates`
 
 ## Sites
 
