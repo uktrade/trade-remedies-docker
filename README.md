@@ -29,9 +29,17 @@ You *must* update values to your `local.env` files to operate the websites local
 
 Run `make collect-notify-templates`
 
+## Compiling requirements
+
+We use pip-compile from https://github.com/jazzband/pip-tools to manage pip dependencies. This runs from the make file when generating requirements:
+
+Run `make all-requirements`
+
+This needs to be run from the host machine as it does not run in a container.
+
 ## BDD testing
 
-Behavioural testing is provided by Behave Django - https://github.com/behave/behave-django and can be triggered by:
+Behavioural testing is provided by [Behave Django](https://github.com/behave/behave-django) and can be triggered by running:
 
 `make bdd`
 
