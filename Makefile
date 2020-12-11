@@ -34,7 +34,7 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make shell$(COLOUR_NONE) : Run a Django shell (accepts a 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make makemigrations$(COLOUR_NONE) : Run Django makemigrations (accepts the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make migrate$(COLOUR_NONE) : Run Django migrate (accepts the 'service' argument)"
-	@echo -e "$(COLOUR_YELLOW)make bdd$(COLOUR_NONE) : Run Django BDD tests (accepts 'service' argument)"
+	@echo -e "$(COLOUR_YELLOW)make bdd$(COLOUR_NONE) : Run Behave Django BDD tests (requires the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make collect-notify-templates$(COLOUR_NONE) : Populates SYS_PARAMS with template names from govuk notify"
 
 clone-repos:
@@ -132,21 +132,6 @@ else
 	@echo -e "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
 
-bdd:
-ifdef service
-	DJANGO_SETTINGS_MODULE=trade_remedies_public.settings.local \
-	docker-compose exec $(service) bash -c "\
-		python manage.py behave ${BEHAVE_OPTS} \
-		--settings=trade_remedies_public.settings.local \
-		--no-capture \
-		--no-input \
-		--junit-directory test-reports --junit \
-		--tags ~@skip \
-	"
-else
-	@echo -e "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
-endif
-
 test:
 ifdef service
 	docker-compose run --rm $(service) python manage.py test --verbosity=2 $(test)
@@ -163,6 +148,18 @@ else
 	docker-compose run --rm api pytest --ignore=staticfiles -n 4
 	docker-compose run --rm public pytest --ignore=staticfiles -n 4
 	docker-compose run --rm caseworker pytest --ignore=staticfiles -n 4
+endif
+
+bdd:
+ifdef service
+	docker-compose exec postgres psql -U postgres -d postgres -c "UPDATE pg_database SET datallowconn = 'false' WHERE datname = 'trade_remedies_api_test';ALTER DATABASE trade_remedies_api_test CONNECTION LIMIT 1;SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'trade_remedies_api_test'"
+	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
+	docker-compose exec postgres psql -U postgres -d postgres -c "CREATE DATABASE trade_remedies_api_test"
+	docker-compose run --rm apitest python manage.py migrate
+	docker-compose exec $(service) sh -c "python manage.py behave --settings=trade_remedies_public.settings.bdd --no-capture"
+	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
+else
+	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
 
 black:

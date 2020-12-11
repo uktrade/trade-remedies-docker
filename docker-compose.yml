@@ -25,6 +25,17 @@ services:
     extends:
       file: ../trade-remedies-api/docker-compose.yml
       service: api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - proxynet
+  apitest:
+    extends:
+      file: ../trade-remedies-api/docker-compose.yml
+      service: apitest
     depends_on:
       - postgres
       - redis

@@ -29,6 +29,31 @@ You *must* update values to your `local.env` files to operate the websites local
 
 Run `make collect-notify-templates`
 
+## Compiling requirements
+
+We use pip-compile from https://github.com/jazzband/pip-tools to manage pip dependencies. This runs from the make file when generating requirements:
+
+Run `make all-requirements`
+
+This needs to be run from the host machine as it does not run in a container.
+
+## BDD testing
+
+Behavioural testing is provided by [Behave Django](https://github.com/behave/behave-django) and can be triggered by running:
+
+`make bdd`
+
+This make command creates a test database (that is used by the 'apitest' container), runs migrations and then initialises BDD tests.
+
+When running from within a BDD test, if the public or caseworker sites access the API, they access an endpoint on the 'apitest' container (rather than the 'api' container, as is usually the case).
+
+This means that BDD tests are completely siloed from local development infrastructure and can be run in parallel.
+
+The 'apitest' container is configured to allow access to test object creation endpoints that are excluded from other configurations.
+
+For this reason, the 'api_test' app in the API project should never be added to non test Django configurations.
+
+Nb. For BDD tests to execute, the containers need to be running. You can do this by running `make up`.
 
 ## Sites
 
