@@ -23,12 +23,25 @@ Populate the project's local.env files with any missing values.
 
 Run `make first-use`
 
+## BDD testing
+
+Behavioural testing is provided by Behave Django - https://github.com/behave/behave-django and can be triggered by:
+
+Run `make bdd`
+
+This make command creates a test database that is used by the 'apitest' container, runs migrations and then initialises BDD tests.
+
+When running from within a BDD test, if the public or caseworker sites access the API, they access an endpoint on the 'apitest' container.
+
+This means that BDD tests are completely siloed from local development infrastructure and can be run in parallel.
+
+The 'apitest' container is configured to allow access to test object creation endpoints that are excluded from other configurations.
+
 ### Required manual configuration
 
 You *must* update values to your `local.env` files to operate the websites locally. See the inline comments in the individual repositories.
 
 Run `make collect-notify-templates`
-
 
 ## Sites
 
