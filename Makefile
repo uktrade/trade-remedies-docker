@@ -152,11 +152,11 @@ endif
 
 bdd:
 ifdef service
-	docker-compose exec postgres psql -U postgres -d postgres -c "UPDATE pg_database SET datallowconn = 'false' WHERE datname = 'trade_remedies_api_test';ALTER DATABASE trade_remedies_api_test CONNECTION LIMIT 1;SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'trade_remedies_api_test'"
+	docker-compose exec postgres psql -U postgres -d postgres -c "UPDATE pg_database SET datallowconn = 'false' WHERE datname = 'trade_remedies_api_test';ALTER DATABASE trade_remedies_api_test CONNECTION LIMIT 1;SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'trade_remedies_api_test'" || echo "Database deletion failed"
 	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
 	docker-compose exec postgres psql -U postgres -d postgres -c "CREATE DATABASE trade_remedies_api_test"
 	docker-compose run --rm apitest python manage.py migrate
-	docker-compose exec $(service) sh -c "python manage.py behave --settings=trade_remedies_public.settings.bdd --no-capture"
+	docker-compose exec $(service) sh -c "python manage.py behave --settings=trade_remedies_$(service).settings.bdd --no-capture"
 	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
 else
 	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
