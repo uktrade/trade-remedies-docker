@@ -155,14 +155,16 @@ ifdef service
 	docker-compose exec postgres psql -U postgres -d postgres -c "UPDATE pg_database SET datallowconn = 'false' WHERE datname = 'trade_remedies_api_test';ALTER DATABASE trade_remedies_api_test CONNECTION LIMIT 1;SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'trade_remedies_api_test'" || echo "Database deletion failed"
 	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
 	docker-compose exec postgres psql -U postgres -d postgres -c "CREATE DATABASE trade_remedies_api_test"
+#	Create test state
 	docker-compose run --rm apitest python manage.py migrate
-
 	docker-compose exec apitest python manage.py resetsecurity
 	docker-compose exec apitest sh fixtures.sh
 	docker-compose exec apitest python manage.py load_sysparams
 	docker-compose exec apitest python manage.py adminuser
+#	backup database. It is restored after each bdd feature.
+	docker-compose exec apitest python manage.py dumpdata --all --exclude contenttypes --output /var/backups/api_test.json
 	docker-compose exec $(service) sh -c "python manage.py behave --settings=trade_remedies_$(service).settings.bdd --no-capture"
-#	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
+	docker-compose exec postgres dropdb trade_remedies_api_test -U postgres --if-exists
 else
 	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
