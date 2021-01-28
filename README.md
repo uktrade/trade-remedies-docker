@@ -67,3 +67,18 @@ Nb. For BDD tests to execute, the containers need to be running. You can do this
 
 If, when first accessing the caseworker site, you receive a forbidden message, you need to clear your session and cookies.
 
+## Branch names
+We use gitflow naming conventions for branches:
+[hotfix/feature]/trlst-storyid-story-description
+
+For example:
+hotfix/trlst-242-optimise-logging-in-api-project 
+
+## Commit process
+Always squash and merge and name your commit as per your branch in the following style:
+
+[hotfix/feature]: TRLST [story #] - story description
+
+For example:
+hotfix: TRLST 242 - optimise logging in api project
+
