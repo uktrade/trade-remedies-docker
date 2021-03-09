@@ -2,7 +2,7 @@
 Master repo for building trade remedies system for local development.
 
 This repository provides a dockerised environment that can fetch, build and start all of the
-Trade Remedies applications and support systems. 
+Trade Remedies applications and support systems.
 
 **This approach MUST be used for all local development.** If you have issues getting set up,
 please speak to a colleague on the Live Services Team.
@@ -25,17 +25,49 @@ to use https then run:
 
     make clone-repos clonetype=https
 
-### Required manual configuration
-In order to operate each service locally it's *very important* to populate each project's
-`trade-remedies-*/local.env` file with suitable values. See the inline comments in the files
-in the individual repositories and reach out to colleagues for API keys etc. 
-
 ### Build and initialise services
 You need to build and configure all the services for first use, simply run:
 
     make first-use
 
-#### Update notification template IDs
+## Required manual configuration
+In order to operate each service locally it's *very important* to populate each project's
+`trade-remedies-*/local.env` file with suitable values. Copy the example
+`trade-remedies-*/local.env.example` to get started.
+
+See the inline comments in the files in the individual repositories and reach out to
+colleagues for API keys etc.
+
+### Set up the API tokens
+You need to define an API token for the Public and Caseworker services, so
+they can make authenticated calls to the trade_remedies_api service.  You can
+do this by setting the `HEALTH_CHECK_TOKEN` value in the `local.env` file.
+
+> There is a Django setting used by the API Client (employed by both
+public and caseworker portals) called `TRUSTED_USER_TOKEN` but this is
+simply set from the `HEALTH_CHECK_TOKEN` environment variable.
+
+The `make first-use` operation invokes `manage.py adminuser`, which will set
+up a user and auth-token according to the `HEALTH_CHECK_USER_EMAIL` and
+`HEALTH_CHECK_USER_TOKEN` values defined in the `local.env` file in the
+trade_remedies_api project. If you copied the example `local.env.example`
+then it will be something like:
+
+- name: `Health Check`
+- email: `_healthcheckuser_@gov.uk` (Value of `HEALTH_CHECK_USER_EMAIL` env var)
+- token: `AUTH-TOKEN-FOR-TRUSTED-USER` (Value of `HEALTH_CHECK_USER_TOKEN` env var)
+
+You can also find the token value in the Django Admin portal at
+`http://localhost:8000/admin`. Log in using the values for `MASTER_ADMIN_EMAIL`
+and `MASTER_ADMIN_PASSWORD` environment variables (e.g. `admin@mylocaltrade.
+com/change-Me`). Navigate to `http://localhost:8000/admin/authtoken/token/`
+and copy the token value for `HEALTH_CHECK_USER_EMAIL` user.
+
+Use the token value from the trade_remedies_api project to set
+`HEALTH_CHECK_TOKEN` in the trade_remedies_public and trade_remedies_caseworker
+`local.env` file.
+
+### Update notification template IDs
 Hopefully you've defined the `GOV_NOTIFY_API_KEY` in the `trade-remedies-api/local.env` file.
 If not, do it now, so that the API service can leverage the
 [GOV.UK Notify](https://www.notifications.service.gov.uk) notification service.

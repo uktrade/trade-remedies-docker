@@ -190,7 +190,7 @@ endif
 
 shell:
 ifdef service
-	docker-compose run --rm $(service) django-admin shell
+	docker-compose run --rm $(service) python manage.py shell
 else
 	echo "$(COLOUR_YELLOW)Please supply a service name with the service argument$(COLOUR_NONE)";
 endif
