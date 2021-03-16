@@ -1,8 +1,11 @@
 # trade-remedies-docker
 Master repo for building trade remedies system for local development.
 
-This repository provides a dockerised environment that can fetch, build and start all of the
-Trade Remedies applications and support systems.
+This repository provides a dockerised environment that can fetch, build and
+start all the Trade Remedies applications and support systems. This includes
+the Trade Remedies services `api`, `caseworker` and `public` and supporting
+services for `postgres`, `redis`, `elasticsearch` and `celery`. To support BDD
+testing the services `apitest`, `selenium-hub` and `chrome` are also spun up.
 
 **This approach MUST be used for all local development.** If you have issues getting set up,
 please speak to a colleague on the Live Services Team.
