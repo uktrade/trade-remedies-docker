@@ -21,6 +21,15 @@ services:
       service: elasticsearch
     networks:
       - proxynet
+  celery:
+    extends:
+      file: ../trade-remedies-api/docker-compose.yml
+      service: celery
+    networks:
+      - proxynet
+    depends_on:
+      - postgres
+      - redis
   api:
     extends:
       file: ../trade-remedies-api/docker-compose.yml
