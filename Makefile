@@ -212,3 +212,13 @@ else
 	docker-compose run --rm public python manage.py migrate --noinput
 	docker-compose run --rm caseworker python manage.py migrate --noinput
 endif
+
+collectstatic:
+ifdef service
+	docker-compose run --rm $(service) python manage.py collectstatic --noinput
+else
+	docker-compose run --rm api python manage.py collectstatic --noinput
+	docker-compose run --rm public python manage.py collectstatic --noinput
+	docker-compose run --rm caseworker python manage.py collectstatic --noinput
+endif
+
