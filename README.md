@@ -58,16 +58,16 @@ You're now ready to run the services.
 
     make up
 
-Wait until all the services are running, for the django services you should 
+Wait until all the services are running, for the django services you should
 see something like the following in the docker-compose logs:
 
     Starting development server at http://0.0.0.0:8000/
 
-In a browser, navigate to the following endpoints to check all is running 
+In a browser, navigate to the following endpoints to check all is running
 correctly:
 
 - API (Admin portal): http://localhost:8000/admin
-  
+
   Login as user: `admin@mylocaltrade.com` password: `change-Me`
 
 - Caseworker portal: http://localhost:8001
@@ -81,11 +81,11 @@ correctly:
 ## Advanced configuration
 
 ### Setting up the API tokens
-The `make first-use` operation creates the required tokens so 
-out-of-the-box there is nothing to do. It invokes `manage.py adminuser`, 
-which will set up a user and auth-token according to the 
-`HEALTH_CHECK_USER_EMAIL` and `HEALTH_CHECK_USER_TOKEN` values defined in 
-the `local.env` file in the trade_remedies_api project and will look 
+The `make first-use` operation creates the required tokens so
+out-of-the-box there is nothing to do. It invokes `manage.py adminuser`,
+which will set up a user and auth-token according to the
+`HEALTH_CHECK_USER_EMAIL` and `HEALTH_CHECK_USER_TOKEN` values defined in
+the `local.env` file in the trade_remedies_api project and will look
 something like:
 
 - name: `Health Check`
@@ -96,8 +96,8 @@ something like:
 public and caseworker portals) called `TRUSTED_USER_TOKEN` but this is
 simply set from the `HEALTH_CHECK_TOKEN` environment variable.
 
-However, if you import an existing Trade Remedies database, you'll need to 
-correctly set API tokens for the Public and Caseworker services, so they can 
+However, if you import an existing Trade Remedies database, you'll need to
+correctly set API tokens for the Public and Caseworker services, so they can
 make authenticated calls to the trade_remedies_api service.  You can do this by
 setting the `HEALTH_CHECK_TOKEN` value in the `local.env` file to a value
 obtained from the imported database.
