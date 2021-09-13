@@ -21,7 +21,8 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make down$(COLOUR_NONE) : Run docker-compose down"
 	@echo -e "$(COLOUR_YELLOW)make start$(COLOUR_NONE) : Run docker-compose start"
 	@echo -e "$(COLOUR_YELLOW)make stop$(COLOUR_NONE) : Run docker-compose stop"
-	@echo -e "$(COLOUR_YELLOW)make first-use$(COLOUR_NONE) : Create development enviornments set up with test data and admin user"
+	@echo -e "$(COLOUR_YELLOW)make database$(COLOUR_NONE) : Create postgres databases for the API and API-Test servers (accepts optional 'name' argument)"
+	@echo -e "$(COLOUR_YELLOW)make first-use$(COLOUR_NONE) : Create development environments set up with test data and admin user"
 	@echo -e "$(COLOUR_YELLOW)make reseed-api-data$(COLOUR_NONE) : Reseed API development data"
 	@echo -e "$(COLOUR_YELLOW)make api-front-end$(COLOUR_NONE) : Run API front end"
 	@echo -e "$(COLOUR_YELLOW)make caseworker-front-end-style$(COLOUR_NONE) : Run code quality checks on caseworker front end"
@@ -79,6 +80,16 @@ start:
 stop:
 	docker-compose stop
 
+database:
+	docker-compose up -d postgres
+ifdef name
+	docker-compose exec postgres createdb -h localhost -U postgres -T template0 $(name)
+else
+	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies
+	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_api_test
+endif
+	docker-compose stop postgres
+
 first-use:
 	docker-compose down
 	docker-compose build
@@ -93,7 +104,6 @@ first-use:
 	docker-compose exec api python manage.py s3credentials
 	docker-compose exec api python manage.py collectstatic --noinput
 	docker-compose exec public python manage.py collectstatic --noinput
-	
 	docker-compose exec caseworker python manage.py collectstatic --noinput
 	docker-compose stop	
 
