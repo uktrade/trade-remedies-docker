@@ -93,7 +93,7 @@ endif
 first-use:
 	docker-compose down
 	docker-compose build
-	docker-compose up -d 
+	docker-compose up -d
 	docker-compose exec api python manage.py migrate --noinput
 	docker-compose exec public python manage.py migrate --noinput
 	docker-compose exec caseworker python manage.py migrate --noinput
@@ -105,7 +105,7 @@ first-use:
 	docker-compose exec api python manage.py collectstatic --noinput
 	docker-compose exec public python manage.py collectstatic --noinput
 	docker-compose exec caseworker python manage.py collectstatic --noinput
-	docker-compose stop	
+	docker-compose stop
 
 
 collect-notify-templates:
