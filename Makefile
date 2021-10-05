@@ -57,7 +57,7 @@ endif
 						git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					else \
 						echo -e "$(COLOUR_YELLOW)cloning using SSH$(COLOUR_NONE)" ; \
-						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name;  # /PS-IGNORE
 					fi; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \
@@ -93,7 +93,7 @@ endif
 first-use:
 	docker-compose down
 	docker-compose build
-	docker-compose up -d 
+	docker-compose up -d
 	docker-compose exec api python manage.py migrate --noinput
 	docker-compose exec public python manage.py migrate --noinput
 	docker-compose exec caseworker python manage.py migrate --noinput
@@ -105,7 +105,7 @@ first-use:
 	docker-compose exec api python manage.py collectstatic --noinput
 	docker-compose exec public python manage.py collectstatic --noinput
 	docker-compose exec caseworker python manage.py collectstatic --noinput
-	docker-compose stop	
+	docker-compose stop
 
 
 collect-notify-templates:
