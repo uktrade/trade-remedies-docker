@@ -68,11 +68,11 @@ correctly:
 
 - API (Admin portal): http://localhost:8000/admin
 
-  Login as user: `admin@mylocaltrade.com` password: `change-Me`
+  Login as user: `admin@mylocaltrade.com` password: `change-Me`  # /PS-IGNORE
 
 - Caseworker portal: http://localhost:8001
 
-  Login as user: `admin@mylocaltrade.com` password: `change-Me`
+  Login as user: `admin@mylocaltrade.com` password: `change-Me`  # /PS-IGNORE
 
 - Public portal: http://localhost:8002
 
@@ -89,7 +89,7 @@ the `local.env` file in the trade_remedies_api project and will look
 something like:
 
 - name: `Health Check`
-- email: `_healthcheckuser_@gov.uk` (Value of `HEALTH_CHECK_USER_EMAIL` env var)
+- email: `_healthcheckuser_@gov.uk` (Value of `HEALTH_CHECK_USER_EMAIL` env var)  # /PS-IGNORE
 - token: `AUTH-TOKEN-FOR-TRUSTED-USER` (Value of `HEALTH_CHECK_USER_TOKEN` env var)
 
 > Note there is a Django setting used by the API Client (employed by both
