@@ -180,3 +180,74 @@ Always squash and merge and name your commit as per your branch in the following
 For example:
 hotfix: TRLST 242 - optimise logging in api project
 
+# TR Release Process
+
+[trade-remedies-api]: (https://github.com/uktrade/trade-remedies-api/)
+[trade-remedies-caseworker]: (https://github.com/uktrade/trade-remedies-caseworker/)
+[trade-remedies-public]: (https://github.com/uktrade/trade-remedies-public/)
+
+1. Perform the following steps in a local copy of each TR repository:
+
+  - [Trade Remedies API][trade-remedies-api]
+  - [Trade Remedies Caseworker][trade-remedies-caseworker]
+  - [Trade Remedies Public][trade-remedies-public]
+
+2. Make sure your local `master` and `develop` branches are up-to-date, e.g.
+   invoke `git fetch; git pull`. Next:
+
+
+    git checkout master
+
+4. Create a branch from `master` named after the next release. For example if
+   the last release was 1.5.13 then:
+
+
+    git branch -b release_1_5_14
+
+5. Merge changes from `develop` into the release branch:
+
+
+    git merge develop
+
+7. Resolve any conflicts and commit the changes.
+
+8. Bump the version number in `config/version.py` version file and commit.
+
+9. Push the release branch to `origin` e.g:
+
+
+     git push --set-upstream origin release_1_5_14
+
+10. In `Jenkins`, deploy the branch to UAT and notify on Slack
+    `#tr-stakeholder-comms` that the release is available for testing.
+
+11. If there are issues, fix in release branch (we will merge back to
+    develop later).
+12. When stakeholders signal UAT is acceptable, create a PR in `github` and merge
+    release branch into master (you won't need a review).
+
+> Ensure you merge release branch into master (not develop)
+
+14. Fetch the latest `master` from remote and tag the release with an annotated
+    tag and push to origin:
+
+
+    git tag -a 1.5.14 -m "trade-remedies-xxx release 1.5.14"
+    git push origin 1.5.14
+
+14. At the opportune moment, in `Jenkins`, deploy the `tag` to UAT for a
+    sanity check. Then in `Jenkins`, deploy the `tag` to PROD.
+15. Notify on Slack `#tr-stakeholder-comms` that `1.5.14` has been deployed to
+    production.
+
+16. We need to prepare a PR to merge release branch back into `develop`
+    (this will normally just be the bumped version but could include fixes
+    for issues discovered in the release cycle). Create a branch from
+    develop (using the story created for the release task):
+
+
+    git checkout develop
+    git checkout -b merge/TRLST-XXX-release-into-develop
+
+17. Resolve any conflicts and commit the changes. Raise a PR, get reviewed
+    and merge.
