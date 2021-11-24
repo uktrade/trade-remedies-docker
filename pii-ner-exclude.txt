@@ -1,0 +1,35 @@
+BRANCH='develop
+COLOUR_GREEN=\033[32;01
+COLOUR_YELLOW=\033[33;01
+database$(COLOUR_NONE
+API
+Generate
+test$(COLOUR_NONE
+migrate$(COLOUR_NONE
+BASE_PATH)/../$$repo_name && pwd && git fetch && git
+&& git branch &&
+https$(COLOUR_NONE
+BASE_PATH)/
+fixtures.sh &&
+python manage.py
+python manage.py adminuser &&
+manage.py s3credentials &&
+npm
+npm i && npx
+MIT License
+Department for International Trade
+Software
+IMPLIED
+DAMAGES
+LIABILITY
+repo
+BDD
+the Live Services Team
+Makefile
+SSH
+Build
+Admin
+AUTH-TOKEN-FOR-TRUSTED-USER` (Value of `HEALTH_CHECK_USER_TOKEN
+the API Client
+Caseworker
+Django Admin
