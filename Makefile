@@ -4,6 +4,7 @@ APPLICATION_NAME="Trade Remedies Dev Env"
 SERVICE_REPO_LIST=trade-remedies-api trade-remedies-caseworker trade-remedies-public
 BRANCH='develop'
 BASE_PATH='.'
+CIRCLECI=t
 
 # Colour coding for output
 COLOUR_NONE=\033[0m
@@ -93,7 +94,7 @@ endif
 first-use:
 	docker-compose down
 	docker-compose build
-	docker-compose up -d 
+	docker-compose up -d
 	docker-compose exec api python manage.py migrate --noinput
 	docker-compose exec public python manage.py migrate --noinput
 	docker-compose exec caseworker python manage.py migrate --noinput
@@ -105,7 +106,7 @@ first-use:
 	docker-compose exec api python manage.py collectstatic --noinput
 	docker-compose exec public python manage.py collectstatic --noinput
 	docker-compose exec caseworker python manage.py collectstatic --noinput
-	docker-compose stop	
+	docker-compose stop
 
 
 collect-notify-templates:
@@ -153,7 +154,7 @@ endif
 
 pytest:
 ifdef service
-	docker-compose run --rm $(service) pytest --ignore=staticfiles -n 4
+	docker-compose run -e $(CIRCLECI) --rm $(service) pytest --ignore=staticfiles -n 4
 else
 	docker-compose run --rm api pytest --ignore=staticfiles -n 4
 	docker-compose run --rm public pytest --ignore=staticfiles -n 4
@@ -231,4 +232,3 @@ else
 	docker-compose run --rm public python manage.py collectstatic --noinput
 	docker-compose run --rm caseworker python manage.py collectstatic --noinput
 endif
-
