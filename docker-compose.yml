@@ -21,6 +21,12 @@ services:
       service: elasticsearch
     networks:
       - proxynet
+  opensearch:
+    extends:
+      file: ../trade-remedies-api/docker-compose.yml
+      service: opensearch
+    networks:
+      - proxynet
   celery:
     extends:
       file: ../trade-remedies-api/docker-compose.yml
