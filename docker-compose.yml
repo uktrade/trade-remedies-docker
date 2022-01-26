@@ -15,12 +15,6 @@ services:
       service: postgres
     networks:
       - proxynet
-  elasticsearch:
-    extends:
-      file: ../trade-remedies-api/docker-compose.yml
-      service: elasticsearch
-    networks:
-      - proxynet
   opensearch:
     extends:
       file: ../trade-remedies-api/docker-compose.yml
@@ -60,6 +54,8 @@ services:
     extends:
       file: ../trade-remedies-public/docker-compose.yml
       service: public
+    ports:
+      - "8002:8000"
     depends_on:
       - redis
     networks:
