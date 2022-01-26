@@ -54,8 +54,6 @@ services:
     extends:
       file: ../trade-remedies-public/docker-compose.yml
       service: public
-    ports:
-      - "8002:8000"
     depends_on:
       - redis
     networks:
