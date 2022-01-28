@@ -15,10 +15,10 @@ services:
       service: postgres
     networks:
       - proxynet
-  elasticsearch:
+  opensearch:
     extends:
       file: ../trade-remedies-api/docker-compose.yml
-      service: elasticsearch
+      service: opensearch
     networks:
       - proxynet
   celery:
