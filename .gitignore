@@ -1,6 +1,4 @@
 .vscode
 .idea
 ner_out.txt
-traderemedies-postgres-uat.sql
-traderemedies-postgres-test.sql
 .DS_Store
