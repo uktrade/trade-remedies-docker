@@ -33,3 +33,10 @@ AUTH-TOKEN-FOR-TRUSTED-USER` (Value of `HEALTH_CHECK_USER_TOKEN
 the API Client
 Caseworker
 Django Admin
+CIRCLECI
+git branch
+git merge
+git push
+UAT
+git checkout
+0.0.0.34

@@ -1,3 +1,4 @@
 .vscode
 .idea
 ner_out.txt
+.DS_Store
