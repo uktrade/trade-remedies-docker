@@ -1,0 +1,576 @@
+docker-compose run --rm api python manage.py test --verbosity=2 
+Creating test database for alias 'default' ('test_trade_remedies')...
+[36;1mOperations to perform:[0m
+[1m  Synchronize unmigrated apps: [0mapi_test, django_countries, django_extensions, messages, phonenumber_field, rest_framework, staticfiles, storages
+[1m  Apply all migrations: [0madmin, audit, auth, authentication, authtoken, axes, cases, contacts, content, contenttypes, core, documents, feedback, invitations, notes, organisations, security, sessions, tasks, workflow
+[36;1mSynchronizing apps without migrations:[0m
+  Creating tables...
+    Running deferred SQL...
+[36;1mRunning migrations:[0m
+  Applying contenttypes.0001_initial...[32;1m OK[0m
+  Applying contenttypes.0002_remove_content_type_name...[32;1m OK[0m
+  Applying cases.0001_initial...[32;1m OK[0m
+  Applying contacts.0001_initial...[32;1m OK[0m
+  Applying auth.0001_initial...[32;1m OK[0m
+  Applying auth.0002_alter_permission_name_max_length...[32;1m OK[0m
+  Applying auth.0003_alter_user_email_max_length...[32;1m OK[0m
+  Applying auth.0004_alter_user_username_opts...[32;1m OK[0m
+  Applying auth.0005_alter_user_last_login_null...[32;1m OK[0m
+  Applying auth.0006_require_contenttypes_0002...[32;1m OK[0m
+  Applying auth.0007_alter_validators_add_error_messages...[32;1m OK[0m
+  Applying auth.0008_alter_user_username_max_length...[32;1m OK[0m
+  Applying auth.0009_alter_user_last_name_max_length...[32;1m OK[0m
+  Applying core.0001_initial...[32;1m OK[0m
+  Applying admin.0001_initial...[32;1m OK[0m
+  Applying admin.0002_logentry_remove_auto_add...[32;1m OK[0m
+  Applying admin.0003_logentry_add_action_flag_choices...[32;1m OK[0m
+  Applying organisations.0001_initial...[32;1m OK[0m
+  Applying documents.0001_initial...[32;1m OK[0m
+  Applying cases.0002_auto_20181015_1444...[32;1m OK[0m
+  Applying audit.0001_initial...[32;1m OK[0m
+  Applying audit.0002_auto_20181015_1444...[32;1m OK[0m
+  Applying audit.0003_auto_20181213_1531...[32;1m OK[0m
+  Applying audit.0004_audit_case_id_new...[32;1m OK[0m
+  Applying audit.0005_auto_20181213_1606...[32;1m OK[0m
+  Applying audit.0006_auto_20181213_1614...[32;1m OK[0m
+  Applying audit.0007_auto_20200203_1423...[32;1m OK[0m
+  Applying audit.0008_audit_parent...[32;1m OK[0m
+  Applying audit.0009_auto_20200212_1428...[32;1m OK[0m
+  Applying audit.0010_precompute_case_title...2022-03-07 22:10:44,222 INFO Found 0 audit log entries
+2022-03-07 22:10:44,227 INFO Patching audit log case titles...
+2022-03-07 22:10:44,230 INFO Precomputed case titles for 0 audit log entries
+[32;1m OK[0m
+  Applying auth.0010_alter_group_name_max_length...[32;1m OK[0m
+  Applying auth.0011_update_proxy_permissions...[32;1m OK[0m
+  Applying authentication.0001_initial...[32;1m OK[0m
+  Applying authentication.0002_auto_20211213_1855...[32;1m OK[0m
+  Applying authtoken.0001_initial...[32;1m OK[0m
+  Applying authtoken.0002_auto_20160226_1747...[32;1m OK[0m
+  Applying authtoken.0003_tokenproxy...[32;1m OK[0m
+  Applying axes.0001_initial...[32;1m OK[0m
+  Applying axes.0002_auto_20151217_2044...[32;1m OK[0m
+  Applying axes.0003_auto_20160322_0929...[32;1m OK[0m
+  Applying axes.0004_auto_20181024_1538...[32;1m OK[0m
+  Applying axes.0005_remove_accessattempt_trusted...[32;1m OK[0m
+  Applying axes.0006_remove_accesslog_trusted...[32;1m OK[0m
+  Applying organisations.0002_organisation_duplicate_of...[32;1m OK[0m
+  Applying organisations.0003_auto_20181211_1642...[32;1m OK[0m
+  Applying organisations.0004_organisation_tra_organisation...[32;1m OK[0m
+  Applying organisations.0005_auto_20190219_1045...[32;1m OK[0m
+  Applying organisations.0006_auto_20190219_1320...[32;1m OK[0m
+  Applying organisations.0007_auto_20190402_1559...[32;1m OK[0m
+  Applying organisations.0008_organisation_fraudulent...[32;1m OK[0m
+  Applying security.0001_initial...[32;1m OK[0m
+  Applying security.0002_auto_20181106_1037...[32;1m OK[0m
+  Applying workflow.0001_initial...[32;1m OK[0m
+  Applying cases.0003_auto_20181024_1350...[32;1m OK[0m
+  Applying cases.0004_auto_20181101_1647...[32;1m OK[0m
+  Applying cases.0005_auto_20181108_1750...[32;1m OK[0m
+  Applying cases.0006_auto_20181109_1151...[32;1m OK[0m
+  Applying cases.0007_submissionstatus_public_name...[32;1m OK[0m
+  Applying cases.0008_auto_20181113_1131...[32;1m OK[0m
+  Applying cases.0009_remove_submission_response_deadline...[32;1m OK[0m
+  Applying cases.0010_submissionstatus_draft...[32;1m OK[0m
+  Applying cases.0011_add_submission_status_send_confirmation_notification...[32;1m OK[0m
+  Applying cases.0012_remove_submission_deficiency_notice...[32;1m OK[0m
+  Applying cases.0013_auto_20181129_0116...[32;1m OK[0m
+  Applying cases.0014_casetype_workflow...[32;1m OK[0m
+  Applying cases.0015_casestage_flow_restrict...[32;1m OK[0m
+  Applying cases.0016_case_initiated_sequence...[32;1m OK[0m
+  Applying cases.0017_auto_20181211_1632...[32;1m OK[0m
+  Applying cases.0018_submission_time_window...[32;1m OK[0m
+  Applying cases.0019_auto_20181230_1748...[32;1m OK[0m
+  Applying cases.0020_auto_20190103_1630...[32;1m OK[0m
+  Applying cases.0021_timegate_action_models...[32;1m OK[0m
+  Applying cases.0022_add_submission_type_time_window_key...[32;1m OK[0m
+  Applying cases.0023_remove_submission_deficiency_document...[32;1m OK[0m
+  Applying cases.0024_submissiontype_notify_template...[32;1m OK[0m
+  Applying cases.0025_auto_20190221_1305...[32;1m OK[0m
+  Applying cases.0026_auto_20190221_1358...[32;1m OK[0m
+  Applying cases.0027_auto_20190221_1406...[32;1m OK[0m
+  Applying cases.0028_add_caseworkflowstate_key_index...[32;1m OK[0m
+  Applying cases.0029_auto_20190227_1411...[32;1m OK[0m
+  Applying cases.0030_submissiontype_order...[32;1m OK[0m
+  Applying cases.0031_auto_20190322_1010...[32;1m OK[0m
+  Applying cases.0032_auto_20190328_1642...[32;1m OK[0m
+  Applying cases.0033_casetype_order...[32;1m OK[0m
+  Applying cases.0034_casetype_internal...[32;1m OK[0m
+  Applying cases.0035_auto_20190429_1533...[32;1m OK[0m
+  Applying cases.0036_auto_20190502_1532...[32;1m OK[0m
+  Applying cases.0037_submissionstatus_review_ok...[32;1m OK[0m
+  Applying cases.0038_auto_20190804_2250...[32;1m OK[0m
+  Applying cases.0039_auto_20190903_0817...[32;1m OK[0m
+  Applying cases.0040_submission_organisation_name...[32;1m OK[0m
+  Applying cases.0041_casetype_meta...[32;1m OK[0m
+  Applying cases.0042_casemilestone_milestonetype...[32;1m OK[0m
+  Applying cases.0043_case_parent...[32;1m OK[0m
+  Applying cases.0044_auto_20191206_1016...[32;1m OK[0m
+  Applying cases.0045_auto_20191216_1525...[32;1m OK[0m
+  Applying cases.0046_notice...[32;1m OK[0m
+  Applying cases.0047_notice_published_at...[32;1m OK[0m
+  Applying cases.0048_auto_20200120_1225...[32;1m OK[0m
+  Applying cases.0049_auto_20200120_1341...[32;1m OK[0m
+  Applying cases.0050_submissiontype_meta...[32;1m OK[0m
+  Applying cases.0051_auto_20210217_1440...[32;1m OK[0m
+  Applying cases.0052_populate_submissiontype...[32;1m OK[0m
+  Applying cases.0053_populate_submissionstatus...2022-03-07 22:11:03,898 INFO Created Submission Status 'Deficient' for Submission Type 29
+2022-03-07 22:11:03,902 INFO Created Submission Status 'Deficient' for Submission Type 30
+2022-03-07 22:11:03,905 INFO Created Submission Status 'Deficient' for Submission Type 31
+2022-03-07 22:11:03,907 INFO Created Submission Status 'Deficient' for Submission Type 32
+2022-03-07 22:11:03,916 INFO Created Submission Status 'Deficient' for Submission Type 33
+2022-03-07 22:11:03,923 INFO Created Submission Status 'Deficient' for Submission Type 34
+2022-03-07 22:11:03,934 INFO Created Submission Status 'Deficient' for Submission Type 35
+2022-03-07 22:11:03,938 INFO Created Submission Status 'Deficient' for Submission Type 36
+2022-03-07 22:11:03,948 INFO Created Submission Status 'Deficient' for Submission Type 37
+2022-03-07 22:11:03,951 INFO Created Submission Status 'Deficient' for Submission Type 38
+2022-03-07 22:11:03,955 INFO Created Submission Status 'Deficient' for Submission Type 28
+2022-03-07 22:11:03,958 INFO Created Submission Status 'Sufficient' for Submission Type 29
+2022-03-07 22:11:03,959 INFO Created Submission Status 'Sufficient' for Submission Type 30
+2022-03-07 22:11:03,971 INFO Created Submission Status 'Sufficient' for Submission Type 31
+2022-03-07 22:11:03,975 INFO Created Submission Status 'Sufficient' for Submission Type 32
+2022-03-07 22:11:03,978 INFO Created Submission Status 'Sufficient' for Submission Type 33
+2022-03-07 22:11:03,989 INFO Created Submission Status 'Sufficient' for Submission Type 34
+2022-03-07 22:11:03,997 INFO Created Submission Status 'Sufficient' for Submission Type 35
+2022-03-07 22:11:04,012 INFO Created Submission Status 'Sufficient' for Submission Type 36
+2022-03-07 22:11:04,014 INFO Created Submission Status 'Sufficient' for Submission Type 37
+2022-03-07 22:11:04,018 INFO Created Submission Status 'Sufficient' for Submission Type 38
+2022-03-07 22:11:04,021 INFO Created Submission Status 'Sufficient' for Submission Type 28
+2022-03-07 22:11:04,023 INFO Created Submission Status 'Published' for Submission Type 29
+2022-03-07 22:11:04,028 INFO Created Submission Status 'Published' for Submission Type 30
+2022-03-07 22:11:04,035 INFO Created Submission Status 'Published' for Submission Type 31
+2022-03-07 22:11:04,041 INFO Created Submission Status 'Published' for Submission Type 32
+2022-03-07 22:11:04,044 INFO Created Submission Status 'Published' for Submission Type 33
+2022-03-07 22:11:04,046 INFO Created Submission Status 'Published' for Submission Type 34
+2022-03-07 22:11:04,053 INFO Created Submission Status 'Published' for Submission Type 35
+2022-03-07 22:11:04,057 INFO Created Submission Status 'Published' for Submission Type 36
+2022-03-07 22:11:04,060 INFO Created Submission Status 'Published' for Submission Type 37
+2022-03-07 22:11:04,064 INFO Created Submission Status 'Published' for Submission Type 38
+2022-03-07 22:11:04,066 INFO Created Submission Status 'Published' for Submission Type 28
+2022-03-07 22:11:04,072 INFO Created Submission Status 'Created' for Submission Type 29
+2022-03-07 22:11:04,076 INFO Created Submission Status 'Created' for Submission Type 30
+2022-03-07 22:11:04,084 INFO Created Submission Status 'Created' for Submission Type 31
+2022-03-07 22:11:04,087 INFO Created Submission Status 'Created' for Submission Type 32
+2022-03-07 22:11:04,090 INFO Created Submission Status 'Created' for Submission Type 33
+2022-03-07 22:11:04,094 INFO Created Submission Status 'Created' for Submission Type 34
+2022-03-07 22:11:04,099 INFO Created Submission Status 'Created' for Submission Type 35
+2022-03-07 22:11:04,105 INFO Created Submission Status 'Created' for Submission Type 36
+2022-03-07 22:11:04,107 INFO Created Submission Status 'Created' for Submission Type 37
+2022-03-07 22:11:04,114 INFO Created Submission Status 'Created' for Submission Type 38
+2022-03-07 22:11:04,118 INFO Created Submission Status 'Created' for Submission Type 28
+[32;1m OK[0m
+  Applying cases.0054_populate_submissiontype_statement_intended_preliminary_decision...[32;1m OK[0m
+  Applying core.0002_auto_20181218_1929...[32;1m OK[0m
+  Applying core.0003_twofactorauth_last_user_agent...[32;1m OK[0m
+  Applying core.0004_passwordresetrequest...[32;1m OK[0m
+  Applying core.0005_auto_20190109_1648...[32;1m OK[0m
+  Applying core.0006_auto_20190116_1535...[32;1m OK[0m
+  Applying core.0007_auto_20190121_1430...[32;1m OK[0m
+  Applying core.0008_twofactorauth_locked_until...[32;1m OK[0m
+  Applying core.0009_twofactorauth_attempts...[32;1m OK[0m
+  Applying core.0010_user_name...[32;1m OK[0m
+  Applying core.0011_auto_20190220_1623...[32;1m OK[0m
+  Applying core.0012_auto_20190220_1651...[32;1m OK[0m
+  Applying core.0013_auto_20190227_1411...[32;1m OK[0m
+  Applying contacts.0002_auto_20181015_1444...[32;1m OK[0m
+  Applying contacts.0003_casecontact_organisation...[32;1m OK[0m
+  Applying contacts.0004_auto_20190207_2037...[32;1m OK[0m
+  Applying contacts.0005_auto_20190520_1322...[32;1m OK[0m
+  Applying contacts.0006_auto_20190617_0850...[32;1m OK[0m
+  Applying content.0001_initial...[32;1m OK[0m
+  Applying content.0002_auto_20181015_1444...[32;1m OK[0m
+  Applying core.0014_auto_20190227_1606...[32;1m OK[0m
+  Applying core.0015_auto_20190326_1350...[32;1m OK[0m
+  Applying core.0016_auto_20190617_0850...[32;1m OK[0m
+  Applying core.0017_auto_20190617_1426...[32;1m OK[0m
+  Applying core.0018_auto_20190713_0832...[32;1m OK[0m
+  Applying core.0019_userprofile_settings...[32;1m OK[0m
+  Applying core.0020_systemparameter_editable...[32;1m OK[0m
+  Applying core.0021_userprofile_last_modified...[32;1m OK[0m
+  Applying core.0022_userprofile_email_verify_code_last_sent...[32;1m OK[0m
+  Applying core.0023_twofactorauth_generated_at...[32;1m OK[0m
+  Applying core.0024_twofactorauth_delivery_type...[32;1m OK[0m
+  Applying documents.0002_documentbundle...[32;1m OK[0m
+  Applying documents.0003_auto_20190409_0826...[32;1m OK[0m
+  Applying documents.0004_auto_20190424_1409...[32;1m OK[0m
+  Applying documents.0005_auto_20190502_0912...[32;1m OK[0m
+  Applying documents.0006_auto_20190703_1002...[32;1m OK[0m
+  Applying documents.0007_document_indexed...[32;1m OK[0m
+  Applying documents.0008_document_index_state...[32;1m OK[0m
+  Applying documents.0009_auto_20200723_1026...[32;1m OK[0m
+  Applying documents.0010_auto_20200730_1158...[32;1m OK[0m
+  Applying documents.0011_document_av_reason...[32;1m OK[0m
+  Applying documents.0012_auto_20210324_1618...[32;1m OK[0m
+  Applying documents.0013_auto_20211025_1505...[32;1m OK[0m
+  Applying feedback.0001_initial...[32;1m OK[0m
+  Applying feedback.0002_auto_20190109_1254...[32;1m OK[0m
+  Applying invitations.0001_initial...[32;1m OK[0m
+  Applying invitations.0002_auto_20181015_1444...[32;1m OK[0m
+  Applying invitations.0003_invitation_submission...[32;1m OK[0m
+  Applying invitations.0004_invitation_sent_at...[32;1m OK[0m
+  Applying invitations.0005_auto_20181106_1306...[32;1m OK[0m
+  Applying invitations.0006_invitation_approved_by...[32;1m OK[0m
+  Applying invitations.0007_auto_20190521_1410...[32;1m OK[0m
+  Applying invitations.0008_invitation_invalid...[32;1m OK[0m
+  Applying invitations.0009_invitation_name...[32;1m OK[0m
+  Applying invitations.0010_invitation_meta...[32;1m OK[0m
+  Applying invitations.0011_auto_20210709_1832...[32;1m OK[0m
+  Applying notes.0001_initial...[32;1m OK[0m
+  Applying notes.0002_note_model_key...[32;1m OK[0m
+  Applying notes.0003_note_data...[32;1m OK[0m
+  Applying organisations.0009_organisationname...[32;1m OK[0m
+  Applying organisations.0010_auto_20191024_1353...[32;1m OK[0m
+  Applying organisations.0011_organisation_merged_from...[32;1m OK[0m
+  Applying organisations.0012_organisation_json_data...[32;1m OK[0m
+  Applying security.0003_caserole_allow_cw_create...[32;1m OK[0m
+  Applying security.0004_usercase_auth_contact...[32;1m OK[0m
+  Applying security.0005_auto_20190901_2005...[32;1m OK[0m
+  Applying security.0006_auto_20190918_1254...2022-03-07 22:11:25,192 INFO 0
+[32;1m OK[0m
+  Applying security.0007_auto_20191104_1337...[32;1m OK[0m
+  Applying sessions.0001_initial...[32;1m OK[0m
+  Applying tasks.0001_initial...[32;1m OK[0m
+  Applying tasks.0002_auto_20200128_1203...[32;1m OK[0m
+  Applying tasks.0003_auto_20200204_1246...[32;1m OK[0m
+  Applying tasks.0004_task_reference...[32;1m OK[0m
+  Applying tasks.0005_auto_20200318_1335...[32;1m OK[0m
+  Applying tasks.0006_auto_20200420_0754...[32;1m OK[0m
+  Applying workflow.0002_auto_20190227_1411...[32;1m OK[0m
+System check identified no issues (0 silenced).
+test_create_case (api_test.tests.test_create_case.CreateCaseTest) ... ok
+test_can_create_specific_user (api_test.tests.test_create_user.CreateUserTest) ... ok
+test_can_create_user (api_test.tests.test_create_user.CreateUserTest) ... response.data[0] = ttt.aaa@d.com
+ok
+test_case_title (audit.tests.test_audit.AuditModelHelpersTest) ... ERROR
+test_case_title_saved (audit.tests.test_audit.AuditModelHelpersTest) ... ok
+test_existing_data_preserved (audit.tests.test_audit.AuditModelHelpersTest) ... FAIL
+test_row_columns (audit.tests.test_audit.AuditModelHelpersTest) ... ERROR
+test_row_values (audit.tests.test_audit.AuditModelHelpersTest) ... ERROR
+test_to_row (audit.tests.test_audit.AuditModelHelpersTest) ... ERROR
+test_custom_audit_log (audit.tests.test_audit.AuditTasksTest) ... FAIL
+test_case_audit_creation (audit.tests.test_audit.AuditTest) ... FAIL
+test_case_change_assisted_audit (audit.tests.test_audit.AuditTest)
+Test case edited by case worker on behalf of a user (assisted) generates ... ERROR
+test_case_change_unassisted_audit (audit.tests.test_audit.AuditTest)
+Test case edited by user (unassisted) generates the right audit message ... ERROR
+test_soft_delete (audit.tests.test_audit.AuditTest) ... ERROR
+test_submission_assisted (audit.tests.test_audit.AuditTest) ... ERROR
+test_submission_document_assisted (audit.tests.test_audit.AuditTest) ... ERROR
+test_get_cases_assigned_user (cases.tests.test_api.CaseAPITest) ... ok
+test_get_cases_owner_user (cases.tests.test_api.CaseAPITest) ... ok
+test_get_cases_unassigned_user (cases.tests.test_api.CaseAPITest) ... skipped 'Fix for updated security model'
+test_user_access_allowed (cases.tests.test_api.CaseAPITest) ... ok
+test_user_access_denied (cases.tests.test_api.CaseAPITest) ... skipped 'Fix for updated security model'
+test_access_denied_get_submissions (cases.tests.test_api.SubmissionAPITest) ... ok
+test_create_submission (cases.tests.test_api.SubmissionAPITest) ... ok
+test_get_all_organisation_submissions (cases.tests.test_api.SubmissionAPITest) ... ok
+test_get_case_submissions (cases.tests.test_api.SubmissionAPITest) ... ok
+test_create_submission (cases.tests.test_api.SubmissionStatusAPITest) ... ok
+test_create_submission_with_notification (cases.tests.test_api.SubmissionStatusAPITest) ... 2022-03-07 22:12:37,618 WARNING SystemParameter key not found: LINK_HELP_BOX_GUIDANCE
+FAIL
+test_stage_transition (cases.tests.test_case.CaseTest)
+Test that stage 1 can be set, ... ok
+test_stage_transition_ignore_flow (cases.tests.test_case.CaseTest)
+Test that stage 1 can be set, ... ok
+test_correct_review_types (cases.tests.test_notice.CaseTest) ... ok
+test_correct_review_types_sf (cases.tests.test_notice.CaseTest)
+Tests that when the case_type of the Notice is changed, the review types also do. ... ok
+test_correct_review_types_termination_change_1 (cases.tests.test_notice.CaseTest)
+Now we change the termination_at value of the Notice object to 6 weeks from now, ... ok
+test_correct_review_types_termination_change_2 (cases.tests.test_notice.CaseTest)
+Now we change the termination_at value of the Notice object to 15 weeks from now, ... ok
+test_change_task_attributes (cases.tests.test_outcomes.OutcomesTests) ... ok
+test_create_without_window_based_due_date (cases.tests.test_submission.SubmissionTest) ... ok
+test_get_available_submission_types_for_case (cases.tests.test_submission.SubmissionTypeTest) ... /usr/local/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1424: RuntimeWarning: DateTimeField CaseWorkflowState.due_date received a naive datetime (2019-01-09 00:00:00) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+/usr/local/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1424: RuntimeWarning: DateTimeField CaseWorkflowState.due_date received a naive datetime (2019-01-11 00:00:00) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+ok
+test_run (cases.tests.test_tasks.ProcessTimeGateActionsTest) ... /usr/local/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1424: RuntimeWarning: DateTimeField CaseWorkflowState.due_date received a naive datetime (2019-01-10 00:00:00) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+2019-01-10 10:00:00,000 INFO Processing timegate action: 62d74318-b746-4ecc-b540-5d122908586c
+ERROR
+test_public_assign_user (cases.tests.test_team.CaseTeamTest) ... ok
+test_tra_manager_assign_user (cases.tests.test_team.CaseTeamTest) ... ok
+test_tra_user_assign_user (cases.tests.test_team.CaseTeamTest) ... ok
+test_content_hierarchy (content.tests.test_content.ContentTest) ... ok
+test_parameters_are_set (core.tests.test_correct_user_contact_org.CorrectUserContactOrgTests) ... ok
+test_user_contact_org_is_corrected (core.tests.test_correct_user_contact_org.CorrectUserContactOrgTests) ... User test@example.com has been assigned the appropriate organisation and organisation case role
+ok
+test_get_when_cached (core.tests.test_feature_flags.CaseAPITest) ... ok
+test_get_when_false (core.tests.test_feature_flags.CaseAPITest) ... ok
+test_get_when_not_found (core.tests.test_feature_flags.CaseAPITest) ... ok
+test_get_when_true (core.tests.test_feature_flags.CaseAPITest) ... ok
+test_send_mail (core.tests.test_notifier.NotifierTest) ... 2022-03-07 22:13:22,129 WARNING SystemParameter key not found: LINK_HELP_BOX_GUIDANCE
+2022-03-07 22:13:22,136 WARNING SystemParameter key not found: LINK_HELP_BOX_GUIDANCE
+ok
+test_send_mail_blocked_by_whitelist (core.tests.test_notifier.NotifierTest) ... ok
+test_send_mail_override_context (core.tests.test_notifier.NotifierTest) ... 2022-03-07 22:13:22,679 WARNING SystemParameter key not found: LINK_HELP_BOX_GUIDANCE
+2022-03-07 22:13:22,686 WARNING SystemParameter key not found: LINK_HELP_BOX_GUIDANCE
+ok
+test_get_client_cache (core.tests.test_open_search.OpenSearchTest)
+Tests that the OSWrapper.get_client() method caches previous OpenSearch objects and returns them ... 2022-03-07 22:13:22,720 INFO Instantiating OpenSearch client
+2022-03-07 22:13:22,723 INFO Instantiating OpenSearch client
+ok
+test_get_open_search (core.tests.test_open_search.OpenSearchTest)
+Tests that the get_open_search() function returns a working OpenSearch object ... ok
+test_get_open_search_error (core.tests.test_open_search.OpenSearchTest)
+Tests that without the correct environment variables, an OSWrapperError() is raised ... ok
+test_reset_age (core.tests.test_password_reset.PasswordResetTest) ... ok
+test_reset_pass (core.tests.test_password_reset.PasswordResetTest) ... ok
+test_reset_request (core.tests.test_password_reset.PasswordResetTest) ... ok
+test_dict_value (core.tests.test_systemparam.SystemParameterTest) ... ok
+test_list_of_string (core.tests.test_systemparam.SystemParameterTest) ... ok
+test_list_with_content_type (core.tests.test_systemparam.SystemParameterTest) ... ok
+test_string_value (core.tests.test_systemparam.SystemParameterTest) ... ok
+test_task (core.tests.test_tasks.SendMailTest) ... FAIL
+test_task_with_default_audit_type (core.tests.test_tasks.SendMailTest) ... ERROR
+test_task_with_non_retryable_error (core.tests.test_tasks.SendMailTest) ... FAIL
+test_task_with_retryable_error (core.tests.test_tasks.SendMailTest) ... FAIL
+test_toggle_role (core.tests.test_toggle_role.UserTest) ... ok
+test_user_context_sd (core.tests.test_user_context.UserContextTest) ... ok
+test_user_create (core.tests.test_users.UserTest)
+Test for user creation via User.objects.create_user ... ok
+test_user_update (core.tests.test_users.UserTest)
+Test for user creation via User.objects.create_user ... ok
+test_remove_xlsx_injection_attack_chars (core.tests.test_utils.CSVInjectionTests) ... ok
+test_invite_different_person (invitations.tests.test_invites.InviteTest)
+Test a scenario where invited user is different than the contact invited ... ok
+test_invite_same_person (invitations.tests.test_invites.InviteTest)
+Test a scenario where invited user is the same as than the contact invited ... ok
+test_patch_user_command (security.tests.test_patch_user_command.PatchUserCommandTest) ... 2022-03-07 22:13:30,650 INFO Patching user test1.user@test.test
+2022-03-07 22:13:30,679 INFO Successfully set test1.user@test.test as Organisation User.
+[32;1mSuccessfully set test1.user@test.test as Organisation User.[0m
+ok
+test_patch_user_command_user_with_group (security.tests.test_patch_user_command.PatchUserCommandTest) ... 2022-03-07 22:13:30,975 INFO Patching user test.user@test.test
+ok
+test_patch_user_command_wrong_email (security.tests.test_patch_user_command.PatchUserCommandTest) ... 2022-03-07 22:13:31,070 INFO Patching user does_not_exist
+ok
+test_organisations_have_correct_roles_assigned (security.tests.test_security.AgentSecurityTest)
+Test organisations have their assigned role in their cases ... ok
+test_users_are_in_correct_organisations (security.tests.test_security.AgentSecurityTest)
+Test a user can view cases to which they have been assigned ... ok
+test_organisations_have_correct_roles_assigned (security.tests.test_security.SecurityTest)
+Test organisations have their assigned role in their cases ... ok
+test_users_are_in_correct_organisations (security.tests.test_security.SecurityTest)
+Test a user can view cases to which they have been assigned ... ok
+test_key_precedes (workflow.tests.test_workflow.WorkflowTest) ... ok
+test_key_precedes_when_false (workflow.tests.test_workflow.WorkflowTest) ... ok
+test_all_eq_rule_when_false (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_all_eq_rule_when_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_all_in_list_rule_when_false (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_all_in_list_rule_when_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_all_variate_in_list_rule_when_false (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_all_variate_in_list_rule_when_false_without_na (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_all_variate_in_list_rule_when_false_without_yes (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_all_variate_in_list_rule_when_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_always_operator (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_any_eq_rule_when_false (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_any_eq_rule_when_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_chained_if_rule_when_na (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_chained_if_rule_when_yes (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_commposed_and_all_any_rule_when_any_fails (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_composed_and_all_any_rule_when_all_fails (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_composed_and_all_any_rule_when_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_composed_or_if_rule_when_all_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_composed_or_if_rule_when_fails (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_composed_or_if_rule_when_partially_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_if_rule_when_false (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_if_rule_when_true (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_not_blank_operator (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_not_blank_operator_when_fails (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_not_eq_operator (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+test_not_eq_operator_when_fails (workflow.tests.test_outcomes.BaseOutcomeTests) ... ok
+
+======================================================================
+ERROR: test_case_title (audit.tests.test_audit.AuditModelHelpersTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 194, in test_case_title
+    self.assertEqual(audit.case_title, str(audit.case))
+AttributeError: 'NoneType' object has no attribute 'case_title'
+
+======================================================================
+ERROR: test_row_columns (audit.tests.test_audit.AuditModelHelpersTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 171, in test_row_columns
+    self.assertEqual(audit.row_columns(), expected)
+AttributeError: 'NoneType' object has no attribute 'row_columns'
+
+======================================================================
+ERROR: test_row_values (audit.tests.test_audit.AuditModelHelpersTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 155, in test_row_values
+    row = audit.row_values()
+AttributeError: 'NoneType' object has no attribute 'row_values'
+
+======================================================================
+ERROR: test_to_row (audit.tests.test_audit.AuditModelHelpersTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 176, in test_to_row
+    expected = [("Audit ID", str(audit.id)),
+AttributeError: 'NoneType' object has no attribute 'id'
+
+======================================================================
+ERROR: test_case_change_assisted_audit (audit.tests.test_audit.AuditTest)
+Test case edited by case worker on behalf of a user (assisted) generates
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 61, in test_case_change_assisted_audit
+    audit = Audit.objects.get(case_id=self.assisted_case.id, type="UPDATE")
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+audit.models.Audit.DoesNotExist: Audit matching query does not exist.
+
+======================================================================
+ERROR: test_case_change_unassisted_audit (audit.tests.test_audit.AuditTest)
+Test case edited by user (unassisted) generates the right audit message
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 45, in test_case_change_unassisted_audit
+    audit = Audit.objects.get(case_id=self.unassisted_case.id, type="UPDATE")
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+audit.models.Audit.DoesNotExist: Audit matching query does not exist.
+
+======================================================================
+ERROR: test_soft_delete (audit.tests.test_audit.AuditTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 117, in test_soft_delete
+    audit = Audit.objects.get(model_id=submission.id, type="DELETE")
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+audit.models.Audit.DoesNotExist: Audit matching query does not exist.
+
+======================================================================
+ERROR: test_submission_assisted (audit.tests.test_audit.AuditTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 80, in test_submission_assisted
+    audit = Audit.objects.get(model_id=submission.id, type="UPDATE")
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+audit.models.Audit.DoesNotExist: Audit matching query does not exist.
+
+======================================================================
+ERROR: test_submission_document_assisted (audit.tests.test_audit.AuditTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 102, in test_submission_document_assisted
+    audit = Audit.objects.get(model_id=submission_document_id, type="PURGE")
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+audit.models.Audit.DoesNotExist: Audit matching query does not exist.
+
+======================================================================
+ERROR: test_run (cases.tests.test_tasks.ProcessTimeGateActionsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/freezegun/api.py", line 778, in wrapper
+    result = func(*args, **kwargs)
+  File "/app/cases/tests/test_tasks.py", line 28, in test_run
+    self.case.stage.key, "STATEMENT_OF_ESSENTIAL_FACTS_HEARING_REQUESTS_CLOSED"
+AttributeError: 'NoneType' object has no attribute 'key'
+
+======================================================================
+ERROR: test_task_with_default_audit_type (core.tests.test_tasks.SendMailTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 1336, in patched
+    return func(*newargs, **newkeywargs)
+  File "/app/core/tests/test_tasks.py", line 82, in test_task_with_default_audit_type
+    self.assertEqual(audit.type, AUDIT_TYPE_NOTIFY)
+AttributeError: 'NoneType' object has no attribute 'type'
+
+======================================================================
+FAIL: test_existing_data_preserved (audit.tests.test_audit.AuditModelHelpersTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 221, in test_existing_data_preserved
+    assert audit
+AssertionError
+
+======================================================================
+FAIL: test_custom_audit_log (audit.tests.test_audit.AuditTasksTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/freezegun/api.py", line 778, in wrapper
+    result = func(*args, **kwargs)
+  File "/app/audit/tests/test_audit.py", line 139, in test_custom_audit_log
+    self.assertEqual(Audit.objects.count(), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_case_audit_creation (audit.tests.test_audit.AuditTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/audit/tests/test_audit.py", line 35, in test_case_audit_creation
+    self.assertEqual(len(audit), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_create_submission_with_notification (cases.tests.test_api.SubmissionStatusAPITest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 1336, in patched
+    return func(*newargs, **newkeywargs)
+  File "/app/cases/tests/test_api.py", line 249, in test_create_submission_with_notification
+    notifier_client().send_email_notification.assert_called_once_with(
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 918, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'send_email_notification' to be called once. Called 0 times.
+
+======================================================================
+FAIL: test_task (core.tests.test_tasks.SendMailTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 1336, in patched
+    return func(*newargs, **newkeywargs)
+  File "/app/core/tests/test_tasks.py", line 64, in test_task
+    sync_send.assert_called_once_with(
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 918, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'sync_send_mail' to be called once. Called 0 times.
+
+======================================================================
+FAIL: test_task_with_non_retryable_error (core.tests.test_tasks.SendMailTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 1336, in patched
+    return func(*newargs, **newkeywargs)
+  File "/app/core/tests/test_tasks.py", line 89, in test_task_with_non_retryable_error
+    sync_send.assert_called_once_with(
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 918, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'sync_send_mail' to be called once. Called 0 times.
+
+======================================================================
+FAIL: test_task_with_retryable_error (core.tests.test_tasks.SendMailTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 1336, in patched
+    return func(*newargs, **newkeywargs)
+  File "/app/core/tests/test_tasks.py", line 117, in test_task_with_retryable_error
+    retry.assert_called_once_with(
+  File "/usr/local/lib/python3.9/unittest/mock.py", line 918, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'retry' to be called once. Called 0 times.
+
+----------------------------------------------------------------------
+Ran 105 tests in 141.821s
+
+FAILED (failures=7, errors=11, skipped=2)
+Destroying test database for alias 'default' ('test_trade_remedies')...
