@@ -13,6 +13,8 @@ services:
     extends:
       file: ../trade-remedies-api/docker-compose.yml
       service: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
     networks:
       - proxynet
   opensearch:

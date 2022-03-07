@@ -19,7 +19,7 @@ To see a list of available commands run:
 The following sections describes the commands required to get up and running.
 
 ## Getting started
-In a working directory run: 
+In a working directory run:
 
     make clone-repos
 
@@ -28,35 +28,55 @@ to use https then run:
 
     make clone-repos clonetype=https
 
-Next, create initial databases:
+Next, build the images, start the postgres service and create the databases:
 
-    make_database
+    make build
+    docker-compose create postgres
+    docker-compose start postgres   # Note that this creates the trade-remedies db
+    make createdb
 
-This creates `trade_remedies` and `trade_remedies_api_test` databases. You can
-also specify a custom database name but this would require configuration changes
-in the trade-remedies-api project folder before running the api. Useful for
-if you're going to import database data from the PaaS.
+This creates the `trade_remedies_api_test` and `trade_remedies_uat` databases.
+The final command will fail
+until the Postgres container is ready.
 
-    make_database name=trade_remedies_uat
+Creating a custom-named database
+would require configuration changes
+in the trade-remedies-api project folder
+before running the api.
+If you want to create a database
+called `trade_remedies_extra`, for example, use
+
+    make createdb db=extra
+
+Note that the existence of the `trade_remedies` database
+is controlled from within the trade-remedies-api project,
+so we have deliberately excluded its creation or deletion here.
 
 ### Build and initialise services
-You need to build and configure all the services for first use, simply run:
 
+To build and configure all the services for first use, simply run:
+
+    make up  # ensures all service containers created and running in background
     make first-use
 
 This will download/build all the required docker images and initialise the
 database.
 
 ### Required manual configuration
+
 The make `make clone-repos` command creates `trade-remedies-*/local.
 env` files, but in order to operate each service locally it's important to
-populate some values. See the inline comments in the files in the individual
+populate some values.
+Typically you'll do this by setting environment variables in a _local.env_ file.
+See the inline comments in the files in the individual
 repositories and reach out to colleagues for API keys etc.
 
+(TODO: _The above could use revision: explicit is better than implicit_).
+
 ### Run the services
+
 You're now ready to run the services.
 
-    make up
 
 Wait until all the services are running, for the django services you should
 see something like the following in the docker-compose logs:
@@ -66,15 +86,15 @@ see something like the following in the docker-compose logs:
 In a browser, navigate to the following endpoints to check all is running
 correctly:
 
-- API (Admin portal): http://localhost:8000/admin
+- API (Admin portal): [http://localhost:8000/admin](http://localhost:8000/admin)
 
   Login as user: `admin@mylocaltrade.com` password: `change-Me`  # /PS-IGNORE
 
-- Caseworker portal: http://localhost:8001
+- Caseworker portal: [http://localhost:8001](http://localhost:8001)
 
   Login as user: `admin@mylocaltrade.com` password: `change-Me`  # /PS-IGNORE
 
-- Public portal: http://localhost:8002
+- Public portal: [http://localhost:8002](http://localhost:8002)
 
   Click `Create an account` on the landing page.
 
@@ -116,11 +136,11 @@ If not, do it now, so that the API service can leverage the
 To ensure your local system is configured to use the template IDs available in
 the notification service environment targeted by your `GOV_NOTIFY_API_KEY`
 you need to run the `notify_env` management command as follows:
-   
+
     make collect-notify-templates
 
 This will update the local database to match the template IDs available.
- 
+
 ## Compiling requirements
 We use [pip-compile](https://github.com/jazzband/pip-tools) to manage pip dependencies. If you add
 any new dependencies you should add them to the relevant project's `requirements.in`, then
@@ -170,7 +190,7 @@ We use gitflow naming conventions for branches:
 [hotfix/feature]/trlst-storyid-story-description
 
 For example:
-hotfix/trlst-242-optimise-logging-in-api-project 
+hotfix/trlst-242-optimise-logging-in-api-project
 
 ## Commit process
 Always squash and merge and name your commit as per your branch in the following style:

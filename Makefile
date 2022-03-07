@@ -22,7 +22,8 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make down$(COLOUR_NONE) : Run docker-compose down"
 	@echo -e "$(COLOUR_YELLOW)make start$(COLOUR_NONE) : Run docker-compose start"
 	@echo -e "$(COLOUR_YELLOW)make stop$(COLOUR_NONE) : Run docker-compose stop"
-	@echo -e "$(COLOUR_YELLOW)make database$(COLOUR_NONE) : Create postgres databases for the API and API-Test servers (accepts optional 'name' argument)"
+	@echo -e "$(COLOUR_YELLOW)make createdb$(COLOUR_NONE) : Create postgres database(s) for the API, API-Testand UAT servers (accepts optional 'db' argument)"
+	@echo -e "$(COLOUR_YELLOW)make dropdb$(COLOUR_NONE) : Removes postgres database(s) for the API, API-Testand UAT servers (accepts optional 'db' argument)"
 	@echo -e "$(COLOUR_YELLOW)make first-use$(COLOUR_NONE) : Create development environments set up with test data and admin user"
 	@echo -e "$(COLOUR_YELLOW)make reseed-api-data$(COLOUR_NONE) : Reseed API development data"
 	@echo -e "$(COLOUR_YELLOW)make api-front-end$(COLOUR_NONE) : Run API front end"
@@ -55,10 +56,10 @@ endif
 					echo -e "$(COLOUR_YELLOW)cloning: $$repo_name$(COLOUR_NONE)" ; \
 					if [ "$(clonetype)" ]; then \
 						echo -e "$(COLOUR_YELLOW)cloning using https$(COLOUR_NONE)" ; \
-						git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+						git clone https:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					else \
 						echo -e "$(COLOUR_YELLOW)cloning using SSH$(COLOUR_NONE)" ; \
-						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name;  # /PS-IGNORE
+						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					fi; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \
@@ -67,10 +68,11 @@ endif
 	done
 
 build:
+	make down
 	docker-compose build
 
 up:
-	docker-compose up
+	docker-compose up -d
 
 down:
 	docker-compose down
@@ -81,20 +83,23 @@ start:
 stop:
 	docker-compose stop
 
-database:
-	docker-compose up -d postgres
-ifdef name
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 $(name)
+createdb:
+ifdef db
+	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_$(db)
 else
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies
 	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_api_test
+	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_uat
 endif
-	docker-compose stop postgres
+
+dropdb:
+ifdef db
+	docker-compose exec postgres dropdb -h localhost -U postgres trade_remedies_$(db)
+else
+	docker-compose exec postgres dropdb -h localhost -U postgres trade_remedies_api_test
+	docker-compose exec postgres dropdb -h localhost -U postgres trade_remedies_uat
+endif
 
 first-use:
-	docker-compose down
-	docker-compose build
-	docker-compose up -d
 	docker-compose exec api python manage.py migrate --noinput
 	docker-compose exec public python manage.py migrate --noinput
 	docker-compose exec caseworker python manage.py migrate --noinput
@@ -106,7 +111,7 @@ first-use:
 	docker-compose exec api python manage.py collectstatic --noinput
 	docker-compose exec public python manage.py collectstatic --noinput
 	docker-compose exec caseworker python manage.py collectstatic --noinput
-	docker-compose stop
+
 
 
 collect-notify-templates:
