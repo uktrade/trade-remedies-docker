@@ -56,7 +56,7 @@ endif
 					echo -e "$(COLOUR_YELLOW)cloning: $$repo_name$(COLOUR_NONE)" ; \
 					if [ "$(clonetype)" ]; then \
 						echo -e "$(COLOUR_YELLOW)cloning using https$(COLOUR_NONE)" ; \
-						git clone https:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+						git clone https://git@github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					else \
 						echo -e "$(COLOUR_YELLOW)cloning using SSH$(COLOUR_NONE)" ; \
 						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \

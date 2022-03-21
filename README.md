@@ -71,7 +71,7 @@ Typically you'll do this by setting environment variables in a _local.env_ file.
 See the inline comments in the files in the individual
 repositories and reach out to colleagues for API keys etc.
 
-(TODO: _The above could use revision: explicit is better than implicit_).
+[todo]: The above could use revision: explicit is better than implicit
 
 ### Run the services
 
@@ -88,11 +88,11 @@ correctly:
 
 - API (Admin portal): [http://localhost:8000/admin](http://localhost:8000/admin)
 
-  Login as user: `admin@mylocaltrade.com` password: `change-Me`  # /PS-IGNORE
+  Login as user: `admin@mylocaltrade.com` password: `change-Me`
 
 - Caseworker portal: [http://localhost:8001](http://localhost:8001)
 
-  Login as user: `admin@mylocaltrade.com` password: `change-Me`  # /PS-IGNORE
+  Login as user: `admin@mylocaltrade.com` password: `change-Me`
 
 - Public portal: [http://localhost:8002](http://localhost:8002)
 
@@ -109,12 +109,8 @@ the `local.env` file in the trade_remedies_api project and will look
 something like:
 
 - name: `Health Check`
-- email: `_healthcheckuser_@gov.uk` (Value of `HEALTH_CHECK_USER_EMAIL` env var)  # /PS-IGNORE
+- email: `_healthcheckuser_@gov.uk` (Value of `HEALTH_CHECK_USER_EMAIL` env var)
 - token: `AUTH-TOKEN-FOR-TRUSTED-USER` (Value of `HEALTH_CHECK_USER_TOKEN` env var)
-
-> Note there is a Django setting used by the API Client (employed by both
-public and caseworker portals) called `TRUSTED_USER_TOKEN` but this is
-simply set from the `HEALTH_CHECK_TOKEN` environment variable.
 
 However, if you import an existing Trade Remedies database, you'll need to
 correctly set API tokens for the Public and Caseworker services, so they can
