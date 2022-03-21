@@ -39,6 +39,8 @@ Next, build the images, start the postgres service and create the databases:
     docker-compose start postgres   # Note that this creates the trade-remedies db
     make createdb
 
+Enter the database password when prompted - the default is `postgres`
+
 This creates the `trade_remedies_api_test` and `trade_remedies_uat` databases.
 The final command will fail
 until the Postgres container is ready.

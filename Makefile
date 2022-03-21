@@ -85,18 +85,18 @@ stop:
 
 createdb:
 ifdef db
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_$(db)
+	docker-compose exec postgres createdb -h postgres -U postgres -T template0 trade_remedies_$(db)
 else
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_api_test
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_uat
+	docker-compose exec postgres createdb -h postgres -U postgres -T template0 trade_remedies_api_test
+	docker-compose exec postgres createdb -h postgres -U postgres -T template0 trade_remedies_uat
 endif
 
 dropdb:
 ifdef db
-	docker-compose exec postgres dropdb -h localhost -U postgres trade_remedies_$(db)
+	docker-compose exec postgres dropdb -h postgres -U postgres trade_remedies_$(db)
 else
-	docker-compose exec postgres dropdb -h localhost -U postgres trade_remedies_api_test
-	docker-compose exec postgres dropdb -h localhost -U postgres trade_remedies_uat
+	docker-compose exec postgres dropdb -h postgres -U postgres trade_remedies_api_test
+	docker-compose exec postgres dropdb -h postgres -U postgres trade_remedies_uat
 endif
 
 first-use:
