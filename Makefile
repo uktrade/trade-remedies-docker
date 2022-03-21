@@ -150,20 +150,11 @@ endif
 
 test:
 ifdef service
-	docker-compose run --rm $(service) python manage.py test --verbosity=2 $(test)
+	docker-compose run -w /app -e $(CIRCLECI) --rm $(service) pytest -m "not version2" --ignore=staticfiles -n 4
 else
-	docker-compose run --rm api python manage.py test --verbosity=2 $(test)
-	docker-compose run --rm public python manage.py test $(test)
-	docker-compose run --rm caseworker python manage.py test $(test)
-endif
-
-pytest:
-ifdef service
-	docker-compose run -e $(CIRCLECI) --rm $(service) pytest --ignore=staticfiles -n 4
-else
-	docker-compose run --rm api pytest --ignore=staticfiles -n 4
-	docker-compose run --rm public pytest --ignore=staticfiles -n 4
-	docker-compose run --rm caseworker pytest --ignore=staticfiles -n 4
+	docker-compose run -w /app --rm api pytest -m "not version2" --ignore=staticfiles -n 4
+	docker-compose run -w /app --rm public pytest -m "not version2" --ignore=staticfiles -n 4
+	docker-compose run -w /app --rm caseworker pytest -m "not version2" --ignore=staticfiles -n 4
 endif
 
 bdd:
