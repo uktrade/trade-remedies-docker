@@ -42,8 +42,8 @@ help:
 
 clone-repos:
 ifdef clonetype
-	if [ "$(clonetype)" != "https" ]; then \
-		echo -e "$(COLOUR_RED)Please supply 'https' as clonetype value or omit argument to use SSH$(COLOUR_NONE)" ; \
+	if [ "$(clonetype)" != "ssh" ]; then \
+		echo -e "$(COLOUR_RED)Please supply 'ssh' as clonetype value or omit argument to use HTTPS$(COLOUR_NONE)" ; \
 		exit 1; \
 	fi;
 endif
@@ -55,11 +55,11 @@ endif
 			else \
 					echo -e "$(COLOUR_YELLOW)cloning: $$repo_name$(COLOUR_NONE)" ; \
 					if [ "$(clonetype)" ]; then \
-						echo -e "$(COLOUR_YELLOW)cloning using https$(COLOUR_NONE)" ; \
-						git clone https://git@github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
-					else \
 						echo -e "$(COLOUR_YELLOW)cloning using SSH$(COLOUR_NONE)" ; \
 						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
+					else \
+						echo -e "$(COLOUR_YELLOW)cloning using https$(COLOUR_NONE)" ; \
+						git clone https://git@github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
 					fi; \
 					cd $(BASE_PATH)/../$$repo_name; \
 					git checkout $(BRANCH); \

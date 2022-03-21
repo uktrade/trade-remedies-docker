@@ -23,10 +23,14 @@ In a working directory run:
 
     make clone-repos
 
-This uses an SSH git clone by default. Run the following command if you want
-to use https then run:
+This uses an HTTPS git clone by default. Run the following command if you want
+to use ssh:
 
-    make clone-repos clonetype=https
+    make clone-repos clonetype=ssh
+
+The make make clone-repos command creates trade-remedies-*/local. env files, but in order to operate each service locally 
+it's important to populate some values. Typically, you'll do this by setting environment variables in a 
+local.env file. See the inline comments in the files in the individual repositories and reach out to colleagues for API keys etc.
 
 Next, build the images, start the postgres service and create the databases:
 
@@ -38,6 +42,43 @@ Next, build the images, start the postgres service and create the databases:
 This creates the `trade_remedies_api_test` and `trade_remedies_uat` databases.
 The final command will fail
 until the Postgres container is ready.
+
+Then prepare the environment for use by first starting the containers, then running the `first-use` command:
+    
+    make up
+    make first-use
+
+To ensure your local system is configured to use the template IDs available in
+the notification service environment targeted by your `GOV_NOTIFY_API_KEY`
+you need to run the `notify_env` management command as follows:
+
+    make collect-notify-templates
+
+This will update the local database to match the template IDs available.
+
+Wait until all the services are running, for the Django services you should
+see something like the following in the docker-compose logs:
+
+    Starting development server at http://0.0.0.0:8000/
+
+In a browser, navigate to the following endpoints to check all is running
+correctly:
+
+- API (Admin portal): [http://localhost:8000/admin](http://localhost:8000/admin)
+
+  Login as user: `admin@traderemedies.gov.uk` password: `change-Me`
+
+- Caseworker portal: [http://localhost:8001](http://localhost:8001)
+
+  Login as user: `admin@traderemedies.gov.uk` password: `change-Me`
+
+- Public portal: [http://localhost:8002](http://localhost:8002)
+
+  Click `Create an account` on the landing page.
+
+## Advanced configuration
+
+### Custom Database names  
 
 Creating a custom-named database
 would require configuration changes
@@ -51,54 +92,6 @@ called `trade_remedies_extra`, for example, use
 Note that the existence of the `trade_remedies` database
 is controlled from within the trade-remedies-api project,
 so we have deliberately excluded its creation or deletion here.
-
-### Build and initialise services
-
-To build and configure all the services for first use, simply run:
-
-    make up  # ensures all service containers created and running in background
-    make first-use
-
-This will download/build all the required docker images and initialise the
-database.
-
-### Required manual configuration
-
-The make `make clone-repos` command creates `trade-remedies-*/local.
-env` files, but in order to operate each service locally it's important to
-populate some values.
-Typically you'll do this by setting environment variables in a _local.env_ file.
-See the inline comments in the files in the individual
-repositories and reach out to colleagues for API keys etc.
-
-[todo]: The above could use revision: explicit is better than implicit
-
-### Run the services
-
-You're now ready to run the services.
-
-
-Wait until all the services are running, for the django services you should
-see something like the following in the docker-compose logs:
-
-    Starting development server at http://0.0.0.0:8000/
-
-In a browser, navigate to the following endpoints to check all is running
-correctly:
-
-- API (Admin portal): [http://localhost:8000/admin](http://localhost:8000/admin)
-
-  Login as user: `admin@mylocaltrade.com` password: `change-Me`
-
-- Caseworker portal: [http://localhost:8001](http://localhost:8001)
-
-  Login as user: `admin@mylocaltrade.com` password: `change-Me`
-
-- Public portal: [http://localhost:8002](http://localhost:8002)
-
-  Click `Create an account` on the landing page.
-
-## Advanced configuration
 
 ### Setting up the API tokens
 The `make first-use` operation creates the required tokens so
@@ -120,22 +113,9 @@ obtained from the imported database.
 
 You can also find the token value in the Django Admin portal at
 `http://localhost:8000/admin`. Log in using the values for `MASTER_ADMIN_EMAIL`
-and `MASTER_ADMIN_PASSWORD` environment variables (e.g. `admin@mylocaltrade.
-com/change-Me`). Navigate to `http://localhost:8000/admin/authtoken/token/`
+and `MASTER_ADMIN_PASSWORD` environment variables (e.g. `admin@traderemedies.
+gov.uk/change-Me`). Navigate to `http://localhost:8000/admin/authtoken/tokenproxy/`
 and copy the token value for `HEALTH_CHECK_USER_EMAIL` user.
-
-### Set up Notifications
-Hopefully you've defined the `GOV_NOTIFY_API_KEY` in the `trade-remedies-api/local.env` file.
-If not, do it now, so that the API service can leverage the
-[GOV.UK Notify](https://www.notifications.service.gov.uk) notification service.
-
-To ensure your local system is configured to use the template IDs available in
-the notification service environment targeted by your `GOV_NOTIFY_API_KEY`
-you need to run the `notify_env` management command as follows:
-
-    make collect-notify-templates
-
-This will update the local database to match the template IDs available.
 
 ## Compiling requirements
 We use [pip-compile](https://github.com/jazzband/pip-tools) to manage pip dependencies. If you add
