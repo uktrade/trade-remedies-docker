@@ -24,7 +24,7 @@ In a working directory run:
     make clone-repos
 
 This uses an HTTPS git clone by default. Run the following command if you want
-to use ssh:
+to use SSH:
 
     make clone-repos clonetype=ssh
 
