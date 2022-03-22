@@ -36,7 +36,7 @@ Next, build the images, start the postgres service and create the databases:
 
     make build
     docker-compose create postgres
-    docker-compose start postgres   # Note that this creates the trade-remedies db
+    docker-compose start postgres   # Note that this creates the trade_remedies db
     make createdb
 
 Enter the database password when prompted - the default is `postgres`
