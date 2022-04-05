@@ -165,18 +165,23 @@ session and cookies.
 
 ## Branch names
 We use gitflow naming conventions for branches:
-[hotfix/feature]/trlst-storyid-story-description
+
+**[hotfix/feature/fix]/jira-ID/hyphenated-description-of-story**
 
 For example:
-hotfix/trlst-242-optimise-logging-in-api-project
+
+**hotfix/trlst-242/optimise-logging-in-api-project**
 
 ## Commit process
-Always squash and merge and name your commit as per your branch in the following style:
 
-[hotfix/feature]: TRLST [story #] - story description
+Pull requests follow a similar but more verbose style to keep commit history clear and legible. Always squash and merge and name your commit:
+
+**[Hotfix/Feature/Fix]: Jira-ID - Titled description of story.**
 
 For example:
-hotfix: TRLST 242 - optimise logging in api project
+
+**Hotfix: TRLST-242 - Optimise logging in API project.**
+
 
 # TR Release Process
 
