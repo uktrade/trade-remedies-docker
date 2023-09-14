@@ -22,7 +22,7 @@ In a working directory run:
 
 Next, create initial databases:
 
-    make_database
+    make database
 
 This creates `trade_remedies` and `trade_remedies_api_test` databases. You can
 also specify a custom database name but this would require configuration changes
