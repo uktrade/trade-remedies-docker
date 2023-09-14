@@ -24,13 +24,7 @@ Next, create initial databases:
 
     make database
 
-This creates `trade_remedies` and `trade_remedies_api_test` databases. You can
-also specify a custom database name but this would require configuration changes
-in the trade-remedies-api project folder before running the api. Useful for
-if you're going to import database data from the PaaS.
-
-    make_database name=trade_remedies_uat
-
+This creates `trade_remedies` and `trade_remedies_api_test` databases.
 
 ### Required manual configuration
 The make `make clone-repos` command creates `trade-remedies-*/local.
