@@ -41,15 +41,6 @@ services:
       - redis
     networks:
       - proxynet
-  apitest:
-    extends:
-      file: ../trade-remedies-api/docker-compose.yml
-      service: apitest
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - proxynet
   public:
     extends:
       file: ../trade-remedies-public/docker-compose.yml
