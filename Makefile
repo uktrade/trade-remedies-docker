@@ -38,33 +38,6 @@ help:
 	@echo -e "$(COLOUR_YELLOW)make bdd$(COLOUR_NONE) : Run Behave Django BDD tests (requires the 'service' argument)"
 	@echo -e "$(COLOUR_YELLOW)make collect-notify-templates$(COLOUR_NONE) : Populates SYS_PARAMS with template names from govuk notify"
 
-clone-repos:
-ifdef clonetype
-	if [ "$(clonetype)" != "https" ]; then \
-		echo -e "$(COLOUR_RED)Please supply 'https' as clonetype value or omit argument to use SSH$(COLOUR_NONE)" ; \
-		exit 1; \
-	fi;
-endif
-	@echo -e "$(COLOUR_YELLOW)Fetching and installing repositories...$(COLOUR_NONE)"
-	@for repo_name in $(SERVICE_REPO_LIST); do \
-			if [ -a $(BASE_PATH)/../$$repo_name ]; then \
-					echo -e "$(COLOUR_YELLOW)Repo exists, updating: $$repo_name$(COLOUR_NONE)" ; \
-					cd $(BASE_PATH)/../$$repo_name && pwd && git fetch && git checkout $(BRANCH) && git branch && git pull ; \
-			else \
-					echo -e "$(COLOUR_YELLOW)cloning: $$repo_name$(COLOUR_NONE)" ; \
-					if [ "$(clonetype)" ]; then \
-						echo -e "$(COLOUR_YELLOW)cloning using https$(COLOUR_NONE)" ; \
-						git clone https://github.com/uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \  # /PS-IGNORE
-					else \
-						echo -e "$(COLOUR_YELLOW)cloning using SSH$(COLOUR_NONE)" ; \
-						git clone git@github.com:uktrade/$$repo_name $(BASE_PATH)/../$$repo_name; \
-					fi; \
-					cd $(BASE_PATH)/../$$repo_name; \
-					git checkout $(BRANCH); \
-					cp local.env.example local.env; \
-			fi; \
-	done
-
 build:
 	docker-compose build
 

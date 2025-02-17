@@ -16,15 +16,21 @@ To see a list of available commands run:
 The following sections describes the commands required to get up and running.
 
 ## Getting started
-In a working directory run: 
+In a working directory, clone the following 3 repositories: 
 
-    make clone-repos
+- `trade-remedies-api`
+- `trade-remedies-public`
+- `trade-remedies-caseworkers`
 
-Next, create initial databases:
+And copy the `.env.example` files to `.env` in each repository.
+
+    cp local.env.example local.env
+
+Next, `cd` back to this docker repo and run the below to create the initial databases:
 
     make database
 
-This creates `trade_remedies` and `trade_remedies_api_test` databases.
+This creates `trade_remedies_local` databases.
 
 ### Required manual configuration
 The make `make clone-repos` command creates `trade-remedies-*/local.
