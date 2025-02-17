@@ -1,8 +1,7 @@
-SHELL := /bin/bash
 APPLICATION_NAME="Trade Remedies Dev Env"
 
 SERVICE_REPO_LIST=trade-remedies-api trade-remedies-caseworker trade-remedies-public
-BRANCH='develop'
+BRANCH='master'
 BASE_PATH='.'
 CIRCLECI=t
 
@@ -83,12 +82,8 @@ stop:
 
 database:
 	docker-compose up --force-recreate --remove-orphans -d postgres
-ifdef name
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 $(name)
-else
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies
-	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_api_test
-endif
+	wait 10
+	docker-compose exec postgres createdb -h localhost -U postgres -T template0 trade_remedies_local
 	docker-compose stop postgres
 
 first-use:
